@@ -1,0 +1,2362 @@
+<!DOCTYPE html><html lang="en"><head>
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Codex Collaboration Tutorial — Building Interactive E-Learning Content with AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #faf7f0;
+    --paper-alt: #f2ede2;
+    --rule: #d9d2c2;
+    --rule-soft: #e8e2d2;
+    --ink: #1b1a17;
+    --ink-soft: #3a3630;
+    --muted: #6d655a;
+    --accent: oklch(0.54 0.11 45);        /* dusty terracotta */
+    --accent-soft: oklch(0.94 0.03 55);
+    --mark: oklch(0.92 0.08 90);           /* muted highlight */
+    --warn: oklch(0.52 0.13 40);
+    --code-bg: #1e1c18;
+    --code-ink: #efe8d8;
+    --code-accent: oklch(0.78 0.12 80);
+    --measure: 68ch;
+    --page: 880px;
+  }
+
+  * { box-sizing: border-box; }
+  html { background: #e8e3d4; }
+  body {
+    margin: 0;
+    font-family: "Source Serif 4", Georgia, serif;
+    font-optical-sizing: auto;
+    color: var(--ink);
+    line-height: 1.55;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: var(--page);
+    margin: 0 auto;
+    background: var(--paper);
+    background-image:
+      radial-gradient(rgba(0,0,0,0.012) 1px, transparent 1px);
+    background-size: 3px 3px;
+    padding: 72px 80px 96px;
+    box-shadow: 0 0 0 1px var(--rule), 0 30px 80px rgba(0,0,0,0.08);
+    min-height: 100vh;
+  }
+
+  /* ---------- COVER ---------- */
+  .cover {
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 56px;
+    margin-bottom: 64px;
+  }
+  .cover-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: "Inter Tight", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-bottom: 96px;
+  }
+  .cover-top .mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .cover-top .mark svg { display: block; }
+
+  .cover h1 {
+    font-family: "Source Serif 4", serif;
+    font-weight: 500;
+    font-size: clamp(44px, 6vw, 72px);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    margin: 0 0 28px;
+    max-width: 14ch;
+  }
+  .cover h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .cover .deck {
+    font-family: "Inter Tight", sans-serif;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.3;
+    color: var(--ink-soft);
+    max-width: 38ch;
+    margin: 0 0 48px;
+  }
+
+  .cover-meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    padding-top: 18px;
+    font-family: "Inter Tight", sans-serif;
+  }
+  .cover-meta > div { padding-right: 16px; }
+  .cover-meta dt {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .cover-meta dd {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+
+  /* ---------- TOC ---------- */
+  .toc {
+    margin: 0 0 96px;
+  }
+  .toc h2 {
+    font-family: "Inter Tight", sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--muted);
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 10px;
+    margin: 0 0 20px;
+  }
+  .toc ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    column-count: 2;
+    column-gap: 48px;
+  }
+  .toc li {
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
+    align-items: baseline;
+    gap: 12px;
+    padding: 7px 0;
+    font-family: "Inter Tight", sans-serif;
+    font-size: 14px;
+    break-inside: avoid;
+    border-bottom: 1px dotted var(--rule);
+  }
+  .toc li .n {
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+  }
+  .toc li .t {
+    color: var(--ink);
+  }
+  .toc li .p {
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+  }
+  .toc li.appendix .n { color: var(--accent); font-style: italic; }
+
+  /* ---------- SECTIONS ---------- */
+  section.chapter {
+    margin: 0 0 80px;
+    scroll-margin-top: 40px;
+  }
+  .chapter-header {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 28px;
+    align-items: baseline;
+    border-top: 2px solid var(--ink);
+    padding-top: 28px;
+    margin-bottom: 36px;
+  }
+  .chapter-header .num {
+    font-family: "Source Serif 4", serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 72px;
+    line-height: 0.9;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .chapter-header h2 {
+    font-family: "Source Serif 4", serif;
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    margin: 0;
+    max-width: 20ch;
+    padding-top: 6px;
+  }
+  .chapter-header .tagline {
+    grid-column: 2;
+    font-family: "Inter Tight", sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 12px;
+    letter-spacing: 0.04em;
+  }
+
+  h3 {
+    font-family: "Inter Tight", sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.005em;
+    margin: 40px 0 14px;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  h3::before {
+    content: "§ ";
+    color: var(--accent);
+    font-family: "Source Serif 4", serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+  h4 {
+    font-family: "Inter Tight", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 32px 0 10px;
+  }
+
+  p {
+    margin: 0 0 14px;
+    max-width: var(--measure);
+    text-wrap: pretty;
+    hyphens: auto;
+  }
+  p.lead {
+    font-size: 21px;
+    line-height: 1.45;
+    color: var(--ink-soft);
+    font-weight: 400;
+    margin-bottom: 24px;
+    max-width: 50ch;
+    text-wrap: balance;
+  }
+  p.lead::first-letter {
+    font-size: 1em;
+  }
+
+  /* drop cap on first paragraph after chapter header */
+  .chapter > p:first-of-type::first-letter {
+    font-family: "Source Serif 4", serif;
+    font-weight: 500;
+    font-size: 64px;
+    float: left;
+    line-height: 0.85;
+    padding: 6px 10px 0 0;
+    color: var(--accent);
+  }
+
+  ul, ol { max-width: var(--measure); padding-left: 1.2em; margin: 0 0 18px; }
+  ul { list-style: none; padding-left: 0; }
+  ul li {
+    padding: 4px 0 4px 22px;
+    position: relative;
+  }
+  ul li::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 0.85em;
+    width: 8px;
+    height: 1px;
+    background: var(--accent);
+  }
+  ol { padding-left: 1.5em; }
+  ol li { padding: 3px 0 3px 6px; }
+  ol li::marker {
+    color: var(--accent);
+    font-family: "Inter Tight", sans-serif;
+    font-weight: 500;
+    font-size: 0.92em;
+  }
+
+  em { color: var(--ink); }
+  strong { font-weight: 600; }
+
+  /* ---------- CALLOUTS ---------- */
+  .callout {
+    margin: 22px 0;
+    padding: 20px 24px 20px 28px;
+    background: var(--paper-alt);
+    border-left: 3px solid var(--accent);
+    max-width: var(--measure);
+    position: relative;
+  }
+  .callout .label {
+    font-family: "Inter Tight", sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout.warn { border-left-color: var(--warn); }
+  .callout.warn .label { color: var(--warn); }
+
+  .pullquote {
+    font-family: "Source Serif 4", serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 1.3;
+    color: var(--ink);
+    max-width: 22ch;
+    margin: 32px 0 32px auto;
+    padding-left: 20px;
+    border-left: 2px solid var(--accent);
+    text-wrap: balance;
+  }
+
+  .pullquote-wide {
+    font-family: "Source Serif 4", serif;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 1.25;
+    color: var(--ink);
+    max-width: 36ch;
+    margin: 36px 0;
+    text-wrap: balance;
+  }
+  .pullquote-wide em { color: var(--accent); font-style: italic; }
+
+  /* ---------- CODE ---------- */
+  pre, code {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 13px;
+  }
+  p code, li code {
+    background: var(--paper-alt);
+    border: 1px solid var(--rule-soft);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 0.85em;
+    color: var(--ink);
+  }
+  pre {
+    background: var(--code-bg);
+    color: var(--code-ink);
+    border-radius: 6px;
+    padding: 22px 26px;
+    overflow-x: auto;
+    line-height: 1.55;
+    margin: 20px 0;
+    font-size: 12.5px;
+    position: relative;
+  }
+  pre::before {
+    content: attr(data-lang);
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    font-family: "Inter Tight", sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(239, 232, 216, 0.4);
+    font-weight: 500;
+  }
+  pre .c { color: #8a8370; font-style: italic; }
+  pre .k { color: #e0b96a; }
+  pre .s { color: #b5c98d; }
+  pre .n { color: #d8a2a0; }
+
+  /* ---------- PROMPT TEMPLATE ---------- */
+  .prompt {
+    background: #fdfaf2;
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--ink);
+    padding: 24px 28px;
+    margin: 20px 0;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    border-radius: 0 4px 4px 0;
+    position: relative;
+  }
+  .prompt::before {
+    content: "PROMPT";
+    position: absolute;
+    top: -9px;
+    left: 22px;
+    background: var(--paper);
+    padding: 0 8px;
+    font-family: "Inter Tight", sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .prompt .label {
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .prompt ul { margin: 4px 0 8px; }
+  .prompt ul li { padding: 1px 0 1px 18px; }
+  .prompt ul li::before { background: var(--muted); top: 0.8em; }
+
+  /* ---------- TABLES ---------- */
+  table {
+    width: 100%;
+    max-width: var(--measure);
+    border-collapse: collapse;
+    margin: 22px 0;
+    font-family: "Inter Tight", sans-serif;
+    font-size: 13px;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 12px;
+    vertical-align: top;
+    border-bottom: 1px solid var(--rule);
+  }
+  th {
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 8px;
+  }
+  tr:last-child td { border-bottom: 1px solid var(--ink); }
+
+  /* ---------- MODULE / TYPE GRID ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin: 24px 0;
+    max-width: var(--measure);
+  }
+  .grid .cell {
+    background: var(--paper);
+    padding: 18px 20px;
+  }
+  .grid .cell h5 {
+    font-family: "Inter Tight", sans-serif;
+    font-size: 13px;
+    margin: 0 0 4px;
+    color: var(--ink);
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .grid .cell h5 .tag {
+    font-family: "Source Serif 4", serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 15px;
+    color: var(--accent);
+  }
+  .grid .cell .good {
+    font-family: "Source Serif 4", serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 8px;
+    line-height: 1.4;
+  }
+  .grid .cell ul { margin: 6px 0 0; }
+  .grid .cell li { font-family: "Inter Tight", sans-serif; font-size: 12px; padding: 2px 0 2px 16px; color: var(--ink-soft); }
+  .grid .cell li::before { top: 0.75em; }
+
+  /* ---------- WORKFLOW STAGES ---------- */
+  .stages {
+    margin: 28px 0;
+    max-width: var(--measure);
+  }
+  .stage {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 20px;
+    padding: 18px 0;
+    border-top: 1px solid var(--rule);
+    align-items: start;
+  }
+  .stage:last-child { border-bottom: 1px solid var(--rule); }
+  .stage .label {
+    font-family: "Inter Tight", sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .stage .label .num {
+    display: block;
+    font-family: "Source Serif 4", serif;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--accent);
+    letter-spacing: 0;
+    text-transform: none;
+    margin-top: 2px;
+    line-height: 1;
+  }
+  .stage h4 {
+    margin: 0 0 6px;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .stage p { margin: 0; font-size: 14px; color: var(--ink-soft); }
+  .stage ul { margin: 6px 0 0; }
+  .stage ul li { font-size: 14px; color: var(--ink-soft); padding: 2px 0 2px 20px; }
+
+  /* ---------- FEEDBACK COMPARE ---------- */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 20px 0;
+    max-width: var(--measure);
+  }
+  .compare .col {
+    padding: 18px 20px;
+    border: 1px solid var(--rule);
+    background: var(--paper-alt);
+  }
+  .compare .col.weak { opacity: 0.75; }
+  .compare .col.strong { background: #fdfaf2; border-color: var(--ink); }
+  .compare h5 {
+    font-family: "Inter Tight", sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .compare .col.strong h5 { color: var(--accent); }
+  .compare blockquote {
+    font-family: "Source Serif 4", serif;
+    font-style: italic;
+    font-size: 14px;
+    margin: 6px 0;
+    padding: 0;
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+
+  /* ---------- APPENDIX HEADER ---------- */
+  .appendix-intro {
+    border-top: 3px double var(--ink);
+    margin: 100px 0 40px;
+    padding-top: 24px;
+  }
+  .appendix-intro .eyebrow {
+    font-family: "Inter Tight", sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .appendix-intro h2 {
+    font-family: "Source Serif 4", serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 48px;
+    margin: 0;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  section.appendix .chapter-header .num {
+    font-style: italic;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer.colophon {
+    margin-top: 80px;
+    padding-top: 40px;
+    border-top: 1px solid var(--ink);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px;
+    font-family: "Inter Tight", sans-serif;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  footer.colophon h5 {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin: 0 0 8px;
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* ---------- MISC ---------- */
+  hr.fleuron {
+    border: 0;
+    text-align: center;
+    margin: 48px 0;
+    color: var(--accent);
+  }
+  hr.fleuron::before {
+    content: "❦";
+    font-size: 18px;
+  }
+
+  .marginal {
+    font-family: "Inter Tight", sans-serif;
+    font-size: 11px;
+    color: var(--muted);
+    font-style: italic;
+    letter-spacing: 0.02em;
+  }
+
+  /* ---------- MOBILE ---------- */
+  @media (max-width: 760px) {
+    .page { padding: 48px 28px; }
+    .cover h1 { font-size: 40px; }
+    .cover-meta { grid-template-columns: repeat(2, 1fr); gap: 18px 0; }
+    .chapter-header { grid-template-columns: 1fr; gap: 8px; }
+    .chapter-header .num { font-size: 48px; }
+    .chapter-header h2 { font-size: 28px; }
+    .chapter-header .tagline { grid-column: 1; }
+    .toc ol { column-count: 1; }
+    .grid { grid-template-columns: 1fr; }
+    .compare { grid-template-columns: 1fr; }
+    .stage { grid-template-columns: 1fr; }
+    .stage .label .num { display: inline-block; font-size: 20px; margin-left: 10px; }
+  }
+
+  /* ---------- PRINT ---------- */
+  @media print {
+    html { background: white; }
+    .page { box-shadow: none; max-width: none; padding: 0; background: white; }
+    section.chapter { page-break-inside: auto; }
+    .chapter-header { page-break-after: avoid; }
+    pre, .prompt, .callout { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body data-cc-id="cc-1" style="cursor: crosshair;">
+<div class="page">
+
+<!-- ============ COVER ============ -->
+<header class="cover">
+  <div class="cover-top">
+    <span class="mark">
+      <svg width="14" height="14" viewBox="0 0 14 14"><rect x="0" y="0" width="14" height="14" fill="none" stroke="currentColor"></rect><rect x="3" y="3" width="8" height="8" fill="currentColor"></rect></svg>
+      Codex Collaboration Tutorial
+    </span>
+    <span>No. 01 · Edition April 2026</span>
+  </div>
+
+  <h1>Building interactive <em data-cc-id="cc-2" style=""><br>e-learning content</em> with AI.</h1>
+  <p class="deck">A generic workflow for SCORM packaging, web deployment, and iterative instructional design.</p>
+
+  <dl class="cover-meta">
+    <div>
+      <dt>Document type</dt>
+      <dd>Technical tutorial<br>/ workflow guide</dd>
+    </div>
+    <div>
+      <dt>Primary scope</dt>
+      <dd>Interactive e-learning, SCORM, web deployment</dd>
+    </div>
+    <div>
+      <dt>Audience</dt>
+      <dd>Instructional designers, learning engineers, educators</dd>
+    </div>
+    <div>
+      <dt>Version date</dt>
+      <dd>April 17, 2026</dd>
+    </div>
+  </dl>
+</header>
+
+<!-- ============ TOC ============ -->
+<nav class="toc">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><span class="n">01</span><span class="t">What This Tutorial Is For</span><span class="p">§1</span></li>
+    <li><span class="n">02</span><span class="t">Treat Codex Like a Build Partner</span><span class="p">§2</span></li>
+    <li><span class="n">03</span><span class="t">Content Types This Workflow Supports</span><span class="p">§3</span></li>
+    <li><span class="n">04</span><span class="t">Decide the Delivery Target First</span><span class="p">§4</span></li>
+    <li><span class="n">05</span><span class="t">The Non-Negotiable Prompt Components</span><span class="p">§5</span></li>
+    <li><span class="n">06</span><span class="t">The Best Overall Workflow</span><span class="p">§6</span></li>
+    <li><span class="n">07</span><span class="t">How to Write Your First Prompt</span><span class="p">§7</span></li>
+    <li><span class="n">08</span><span class="t">Example First Prompts by Type</span><span class="p">§8</span></li>
+    <li><span class="n">09</span><span class="t">Why Not to Ask for SCORM First</span><span class="p">§9</span></li>
+    <li><span class="n">10</span><span class="t">How to Review Intermediate Builds</span><span class="p">§10</span></li>
+    <li><span class="n">11</span><span class="t">How to Give Better Revision Feedback</span><span class="p">§11</span></li>
+    <li><span class="n">12</span><span class="t">Most Useful Follow-Up Prompts</span><span class="p">§12</span></li>
+    <li><span class="n">13</span><span class="t">How to Ask for SCORM Packaging</span><span class="p">§13</span></li>
+    <li><span class="n">14</span><span class="t">How to Ask for a Separate Web Version</span><span class="p">§14</span></li>
+    <li><span class="n">15</span><span class="t">Moodle Testing Workflow</span><span class="p">§15</span></li>
+    <li><span class="n">16</span><span class="t">Suggested File Organization</span><span class="p">§16</span></li>
+    <li><span class="n">17</span><span class="t">Preventing Chaos During Revision</span><span class="p">§17</span></li>
+    <li><span class="n">18</span><span class="t">Prompt Patterns by Content Family</span><span class="p">§18</span></li>
+    <li><span class="n">19</span><span class="t">Where Three.js Fits In</span><span class="p">§19</span></li>
+    <li><span class="n">20</span><span class="t">Specialized Track: Three.js</span><span class="p">§20</span></li>
+    <li><span class="n">21</span><span class="t">Accessibility &amp; Learning Usefulness</span><span class="p">§21</span></li>
+    <li><span class="n">22</span><span class="t">Versioning Strategy</span><span class="p">§22</span></li>
+    <li><span class="n">23</span><span class="t">A Reusable Master Prompt</span><span class="p">§23</span></li>
+    <li><span class="n">24</span><span class="t">A Full Example Collaboration</span><span class="p">§24</span></li>
+    <li><span class="n">25</span><span class="t">Troubleshooting Prompts</span><span class="p">§25</span></li>
+    <li><span class="n">26</span><span class="t">Final Quality Checklist</span><span class="p">§26</span></li>
+    <li><span class="n">27</span><span class="t">Final Advice</span><span class="p">§27</span></li>
+    <li><span class="n">28</span><span class="t">Short Summary of the Method</span><span class="p">§28</span></li>
+    <li class="appendix"><span class="n">A</span><span class="t">Complete Minimal Quiz Example</span><span class="p">app.</span></li>
+    <li class="appendix"><span class="n">B</span><span class="t">Minimal scormdriver.js Example</span><span class="p">app.</span></li>
+    <li class="appendix"><span class="n">C</span><span class="t">Minimal imsmanifest.xml Example</span><span class="p">app.</span></li>
+    <li class="appendix"><span class="n">D</span><span class="t">Companion Files &amp; Cheat Sheet</span><span class="p">app.</span></li>
+    <li class="appendix"><span class="n">E</span><span class="t">Operational Prompt Library</span><span class="p">app.</span></li>
+    <li class="appendix"><span class="n">F</span><span class="t">Conversation Patterns That Work</span><span class="p">app.</span></li>
+  </ol>
+</nav>
+
+<!-- ============ §1 ============ -->
+<section class="chapter" id="s1">
+  <div class="chapter-header">
+    <div class="num">01</div>
+    <div>
+      <h2>What this tutorial is for</h2>
+      <div class="tagline">Scope, audience, prerequisites, and a suggested teaching sequence.</div>
+    </div>
+  </div>
+
+  <p class="lead">Use this guide when you want to work with Codex to create learning content that is interactive, instructional, testable, revisable, and deployable — either inside an LMS or on the open web.</p>
+
+  <p>This tutorial focuses on the whole process, not only the code:</p>
+  <ul>
+    <li>defining the learning problem</li>
+    <li>specifying the interaction model</li>
+    <li>writing good prompts</li>
+    <li>reviewing intermediate results</li>
+    <li>refining the design and behavior</li>
+    <li>packaging for SCORM when needed</li>
+    <li>creating a separate web deployment version when needed</li>
+    <li>testing inside Moodle or another LMS</li>
+  </ul>
+
+  <div class="pullquote-wide">This is not only a coding guide. It is a <em>collaboration guide</em>.</div>
+
+  <h3>Primary audience and assumed skill level</h3>
+  <p>This tutorial is written primarily for instructional designers, learning designers, learning engineers, and technically curious educators who want to collaborate with Codex to build working digital learning objects. A secondary audience is front-end developers or educational software collaborators who need a clearer view of the instructional logic behind the build requests.</p>
+  <p>That means the document is not written only for professional developers, but it is also not written as a zero-technical-literacy guide. It assumes the reader can work with files, understand the difference between a web version and a SCORM package, and review outputs in a browser or LMS. Where the workflow becomes more technical — such as SCORM packaging or runtime state handling — the document tries to explain the reason for each step rather than only naming it.</p>
+  <p>If the reader is a classroom instructor or subject-matter expert with little implementation experience, the document can still be useful, but that reader may need developer support for the packaging and testing stages. If the reader is an experienced developer, the instructional-design framing may be the more valuable part.</p>
+
+  <h3>Minimum prerequisite concepts</h3>
+  <p>Some readers, especially undergraduate instructional-design students, may encounter several terms in this document for the first time. If that is the case, it is better to pause here and establish a small conceptual foundation rather than pushing forward and losing the thread by Section 5. At minimum, a reader should understand:</p>
+
+  <table>
+    <tbody><tr><th>Term</th><th>Meaning</th></tr>
+    <tr><td><code>LMS</code></td><td>A learning management system such as Moodle, Canvas, or Blackboard, where content is launched, tracked, and sometimes graded.</td></tr>
+    <tr><td><code>SCORM</code></td><td>A packaging and runtime standard that lets an LMS launch a learning object and record state such as completion, score, and resume information.</td></tr>
+    <tr><td><code>SCORM package</code></td><td>A zip file containing a manifest plus the files needed to launch the activity.</td></tr>
+    <tr><td><code>imsmanifest.xml</code></td><td>The file that tells the LMS what the package contains and which file to launch.</td></tr>
+    <tr><td><code>SCO</code></td><td>A shareable content object, often the launchable unit inside a SCORM package.</td></tr>
+    <tr><td><code>suspend_data</code></td><td>Resumable learner state stored by the SCORM runtime.</td></tr>
+    <tr><td><code>web version</code></td><td>A browser-deployable version that runs outside the LMS.</td></tr>
+    <tr><td><code>localStorage</code></td><td>Browser-side persistence commonly used in a non-SCORM web version.</td></tr>
+    <tr><td><code>Git</code></td><td>A version-control system that makes code changes, branching, diffing, and rollback much easier to manage.</td></tr>
+  </tbody></table>
+
+  <div class="callout">
+    <span class="label">Key distinction</span>
+    <p>The quickest way to explain the difference between a web object and a SCORM object is this: <em>the learning interaction can be almost identical</em>, but the SCORM version is wrapped for LMS launch, state, and reporting, while the web version is wrapped for ordinary browser deployment. If that distinction is clear, the rest of the tutorial becomes much easier to follow.</p>
+  </div>
+
+  <h3>Fast orientation glossary</h3>
+  <p>This mini-glossary is intentionally brief. It is not meant to replace formal standards documentation, but it should help beginners stay oriented.</p>
+  <table>
+    <tbody><tr><td><strong>Articulate</strong></td><td>A popular commercial authoring platform for slide-based and interaction-rich courseware for LMS delivery.</td></tr>
+    <tr><td><strong>Canvas</strong></td><td>An LMS often used in higher education and K–12 settings.</td></tr>
+    <tr><td><strong>cmi5</strong></td><td>A specification that builds on xAPI and adds a more structured LMS launch-and-assignment model.</td></tr>
+    <tr><td><strong>Codex</strong></td><td>The coding collaborator used in this workflow to help author, refine, package, and document learning objects.</td></tr>
+    <tr><td><strong>D3</strong></td><td>A JavaScript library commonly used for data-driven visualizations.</td></tr>
+    <tr><td><strong>Manifest</strong></td><td>In SCORM, usually refers to <code>imsmanifest.xml</code>, describing package structure and launch information.</td></tr>
+    <tr><td><strong>Moodle</strong></td><td>The primary LMS sandbox used in this tutorial for local SCORM testing.</td></tr>
+    <tr><td><strong>Resume</strong></td><td>The ability for a learner to leave and later return to the same activity state.</td></tr>
+    <tr><td><strong>SCORM Cloud</strong></td><td>A neutral environment for distinguishing package-level issues from LMS-specific issues.</td></tr>
+    <tr><td><strong>Three.js</strong></td><td>A JavaScript library for browser-based 3D graphics. Optional, not required.</td></tr>
+    <tr><td><strong>xAPI</strong></td><td>A specification for recording richer learning-experience events than SCORM typically handles comfortably.</td></tr>
+  </tbody></table>
+
+  <h3>Suggested teaching sequence</h3>
+  <p>This document is long enough that it should not be treated as a single reading block in most teaching contexts. A better approach is to modularize it by instructional stage.</p>
+
+  <div class="stages">
+    <div class="stage">
+      <div class="label">Module<span class="num">I</span></div>
+      <div>
+        <h4>Orientation and framing</h4>
+        <p>Sections 1–4. For students who need the basic language of LMS delivery, web delivery, sandbox logic, and the difference between interaction design and packaging.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="label">Module<span class="num">II</span></div>
+      <div>
+        <h4>Prompt architecture</h4>
+        <p>Sections 5 and 7. The conceptual center of the document — the prompt schema is the most reusable skill and often deserves to be taught separately.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="label">Module<span class="num">III</span></div>
+      <div>
+        <h4>Prototype and refine</h4>
+        <p>Sections 6, 8, 10, 11, 12. Building a first version, reviewing it, and improving it through stronger feedback.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="label">Module<span class="num">IV</span></div>
+      <div>
+        <h4>Package and validate</h4>
+        <p>Sections 13, 14, 15, 16. SCORM, web forks, Moodle testing, and package structure.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="label">Module<span class="num">V</span></div>
+      <div>
+        <h4>Compare workflows and scale up</h4>
+        <p>Sections 17 onward plus the appendices. Maintainability, versioning, technology choices, and broader platform questions.</p>
+      </div>
+    </div>
+  </div>
+
+  <p>If you are using this document in a university course, it often works better as a staged lab manual than as a single assigned reading. In a workshop or faculty-training context, the prompt schema and the appendices are usually the most portable pieces.</p>
+</section>
+
+<!-- ============ §2 ============ -->
+<section class="chapter" id="s2">
+  <div class="chapter-header">
+    <div class="num">02</div>
+    <div>
+      <h2>Treat Codex like a build partner</h2>
+      <div class="tagline">The mindset that makes the workflow work.</div>
+    </div>
+  </div>
+
+  <p>The most useful mindset is this:</p>
+
+  <div class="callout warn">
+    <span class="label">Anti-pattern</span>
+    <p>Codex should <em>not</em> be treated like a one-shot generator that magically outputs finished courseware from a single prompt.</p>
+  </div>
+
+  <p>Instead, treat Codex like a technical build partner who helps you through an iterative production process. That means:</p>
+
+  <ol>
+    <li>You define the learning goal clearly.</li>
+    <li>Codex builds a first working version.</li>
+    <li>You review it in context.</li>
+    <li>You identify concrete issues.</li>
+    <li>Codex refines the artifact.</li>
+    <li>You test it in the target delivery environment.</li>
+    <li>You preserve stable versions and split deliverables when necessary.</li>
+  </ol>
+
+  <p>This process is much more reliable than trying to get a perfect final artifact in one shot.</p>
+</section>
+
+<!-- ============ §3 ============ -->
+<section class="chapter" id="s3">
+  <div class="chapter-header">
+    <div class="num">03</div>
+    <div>
+      <h2>Content types this workflow supports</h2>
+      <div class="tagline">Six families of e-learning object the same method covers.</div>
+    </div>
+  </div>
+
+  <p>This workflow can be adapted to many content types. The rest of the tutorial applies to all of them.</p>
+
+  <div class="grid">
+    <div class="cell">
+      <h5><span class="tag">A</span> Interactive explainer</h5>
+      <ul>
+        <li>a timeline</li>
+        <li>a concept walkthrough</li>
+        <li>a process animation</li>
+        <li>a layered infographic</li>
+        <li>a guided scientific explanation</li>
+      </ul>
+      <div class="good">Good if the main goal is conceptual understanding.</div>
+    </div>
+    <div class="cell">
+      <h5><span class="tag">B</span> Quiz or practice object</h5>
+      <ul>
+        <li>multiple-choice quiz</li>
+        <li>short-answer practice</li>
+        <li>flashcard interaction</li>
+        <li>mastery quiz</li>
+        <li>repeated retrieval practice</li>
+      </ul>
+      <div class="good">Good if the main goal is assessment or reinforcement.</div>
+    </div>
+    <div class="cell">
+      <h5><span class="tag">C</span> Branching scenario</h5>
+      <ul>
+        <li>clinical decision tree</li>
+        <li>classroom management simulation</li>
+        <li>ethics case study</li>
+        <li>customer service scenario</li>
+        <li>language practice conversation path</li>
+      </ul>
+      <div class="good">Good if the main goal is decision-making or situated judgment.</div>
+    </div>
+    <div class="cell">
+      <h5><span class="tag">D</span> Simulation or sandbox</h5>
+      <ul>
+        <li>parameter-driven system model</li>
+        <li>policy simulator</li>
+        <li>lab-style interaction</li>
+        <li>feedback-rich mechanical system</li>
+        <li>exploratory decision sandbox</li>
+      </ul>
+      <div class="good">Good if the main goal is systems thinking or mechanism understanding.</div>
+    </div>
+    <div class="cell">
+      <h5><span class="tag">E</span> Data visualization</h5>
+      <ul>
+        <li>interactive chart explainer</li>
+        <li>geographic learning map</li>
+        <li>comparative data story</li>
+        <li>longitudinal data interface</li>
+        <li>science or policy data tool</li>
+      </ul>
+      <div class="good">Good if the main goal is interpretation or pattern recognition.</div>
+    </div>
+    <div class="cell">
+      <h5><span class="tag">F</span> Mini-game or gamified object</h5>
+      <ul>
+        <li>timed arithmetic challenge</li>
+        <li>matching game</li>
+        <li>classification game</li>
+        <li>puzzle-based interaction</li>
+        <li>scoring-based memory task</li>
+      </ul>
+      <div class="good">Good if the main goal is engagement plus repeated practice.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ §4 ============ -->
+<section class="chapter" id="s4">
+  <div class="chapter-header">
+    <div class="num">04</div>
+    <div>
+      <h2>Decide the delivery target before you build</h2>
+      <div class="tagline">Packaging, tracking, and testing all depend on this choice.</div>
+    </div>
+  </div>
+
+  <p>Before asking Codex to write code, decide how the content will be delivered. This affects architecture, tracking, packaging, and testing.</p>
+
+  <div class="grid" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="cell">
+      <h5><span class="tag">A</span> LMS via SCORM</h5>
+      <ul>
+        <li>Moodle upload</li>
+        <li>LMS launch behavior</li>
+        <li>completion tracking</li>
+        <li>score reporting</li>
+        <li>re-entry / resume</li>
+        <li>package-level testing</li>
+      </ul>
+    </div>
+    <div class="cell">
+      <h5><span class="tag">B</span> Browser web app</h5>
+      <ul>
+        <li>easy URL sharing</li>
+        <li>quick feedback loops</li>
+        <li>simpler hosting</li>
+        <li>demo or presentation</li>
+        <li>standalone HTML</li>
+      </ul>
+    </div>
+    <div class="cell">
+      <h5><span class="tag">C</span> Both SCORM and web</h5>
+      <ul>
+        <li>SCORM for LMS realism</li>
+        <li>web for iteration</li>
+        <li>separation of concerns</li>
+        <li>testing both flows</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>A practical note on local Moodle as a sandbox</h3>
+  <p>One of the most useful practical lessons is that a <em>local</em> Moodle instance is often the right first sandbox for LMS testing. Not because Moodle represents every LMS perfectly — it does not — but because it is relatively accessible, testable, and repeatable. When you are trying to understand whether a coded learning object actually behaves like courseware, what you need first is a stable place to upload, launch, break, revise, and re-test. A local Moodle sandbox gives you that loop.</p>
+  <p>This is especially valuable when moving from prototypes into runtime questions such as: Does the package upload cleanly? Does it launch correctly? Does state persist? Does re-entry work? Do score and completion behave as expected? Those are implementation questions, and they are much easier to answer when you control the environment.</p>
+  <p>At the same time, Moodle should not be treated as a universal proxy for every LMS. A package that behaves well in Moodle may still behave differently in Canvas, Blackboard, or another platform. The right mindset is:</p>
+  <ul>
+    <li>use Moodle as your first practical sandbox</li>
+    <li>use it to discover and fix obvious packaging and runtime issues</li>
+    <li>then validate more broadly if cross-platform compatibility matters</li>
+  </ul>
+
+  <h3>Articulate and code-authored content</h3>
+  <p>A major theme in the conversations that produced this document was the question of whether code-authored learning content can substitute for tools like Articulate. That framing is worth including because it changes what you test for.</p>
+  <p>If you compare code-authored content to a traditional authoring tool, the real question is usually not <em>"Can I make something visually similar?"</em> It is <em>"Can I reproduce enough of the invisible runtime work that established authoring tools already handle?"</em> Tools like Articulate are not only slide builders. They also act as translators between content, packaging, state, reporting, and LMS runtime expectations.</p>
+
+  <div class="pullquote">A serious replacement workflow should test at least three layers: the interaction itself, the packaging and runtime behavior, and the maintainability of the content as it changes.</div>
+
+  <h3>Maintainability as a test dimension</h3>
+  <p>The third layer should not remain abstract. If maintainability is part of the comparison, it needs to be tested deliberately rather than mentioned rhetorically. One practical test is to build the same small learning object in two forms: a traditional authoring-tool version and a code-authored version. Then apply the same change requests to both.</p>
+
+  <p>Useful change requests include:</p>
+  <ul>
+    <li>revise introductory copy</li>
+    <li>add one new quiz item</li>
+    <li>change the scoring rule</li>
+    <li>reorder one screen or state</li>
+    <li>localize key interface text</li>
+    <li>adjust the visual theme</li>
+    <li>alter one branching path</li>
+  </ul>
+
+  <p>For each change, record <em>time to implement, ease of review, visibility of what changed, rollback difficulty, mergeability with concurrent work,</em> and <em>regression risk.</em> This is where code-authored content often shows a real advantage: source files can be versioned in Git, diffed line by line, reviewed in pull requests, and branched safely. A <code>.story</code> file, by contrast, is a binary authoring file — it can be backed up, but it is much harder to inspect or merge transparently. That does not automatically make code better in every context, but it makes maintainability <em>testable</em> rather than merely aspirational.</p>
+
+  <h3>A more balanced comparison</h3>
+  <p>The comparison should stay intellectually honest. There are several domains where Articulate remains genuinely strong.</p>
+
+  <div class="compare">
+    <div class="col strong">
+      <h5>Authoring tools often win when</h5>
+      <ul>
+        <li>slide-based narrative authoring</li>
+        <li>rapid assembly by non-developers</li>
+        <li>template-driven course construction</li>
+        <li>review workflows for non-technical stakeholders</li>
+        <li>fast prototyping of conventional compliance content</li>
+        <li>teams already standardized on a suite</li>
+      </ul>
+    </div>
+    <div class="col strong">
+      <h5>Code-authored workflows often win when</h5>
+      <ul>
+        <li>unusual or highly custom interactions</li>
+        <li>visualization- or simulation-heavy work</li>
+        <li>fine-grained version control</li>
+        <li>deeper extensibility</li>
+        <li>automation and scriptability</li>
+        <li>integration with software dev workflows</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>The question is not whether one tool wins universally. The more responsible question is which workflow is stronger for which kind of problem.</p>
+
+  <h3>Cost, access, and institutional adoption</h3>
+  <p>Cost is part of the real comparison, especially for departments deciding whether to broaden access to e-learning production. As of April 17, 2026, Articulate's official pricing page listed Articulate 360 AI at roughly <strong>$1,449 USD / user / year</strong> for Personal and <strong>$1,749 USD / user / year</strong> for Teams, with academic discounts and other plan variations noted on the pricing page. Because pricing changes, verify current numbers directly before using them in institutional planning.</p>
+
+  <p>By contrast, an AI-assisted code-authored workflow usually shifts cost into a different structure: model or API usage where applicable, staff time, hosting or deployment, and training and maintenance overhead. This does not mean the code-authored route is always cheaper. In some settings, staff time may outweigh license savings. But the cost model is different, and often more flexible.</p>
+
+  <h3>What this document still does not prove</h3>
+  <p>It is equally important to say what this document does <em>not</em> yet establish. The tutorial does not yet provide:</p>
+  <ul>
+    <li>a true side-by-side build of the same learning object in Articulate and in a code-authored workflow</li>
+    <li>measured comparative results across the three evaluation layers</li>
+    <li>a full institutional cost comparison based on actual staffing and deployment assumptions</li>
+    <li>empirical evidence showing cross-platform equivalence across multiple LMS environments</li>
+  </ul>
+  <p>This document should be read as a rigorous workflow and evaluation framework, not as a completed proof that code-authored learning objects have already replaced Articulate across the board.</p>
+
+  <div class="callout">
+    <span class="label">Project prompt</span>
+    <p><em>Build the same learning object twice — once in Articulate and once in an AI-assisted code workflow — then compare both versions across three layers: interaction quality, packaging and LMS runtime behavior, and maintainability over time.</em> Keep the learning goal constant; vary only the authoring workflow. This turns the current document into a scaffold for empirical work rather than a claim that has already been settled.</p>
+  </div>
+</section>
+
+<hr class="fleuron">
+
+<!-- ============ §5 ============ -->
+<section class="chapter" id="s5">
+  <div class="chapter-header">
+    <div class="num">05</div>
+    <div>
+      <h2>The non-negotiable prompt components</h2>
+      <div class="tagline">The design contract between pedagogy and implementation.</div>
+    </div>
+  </div>
+
+  <p class="lead">Before your first major prompt, define these components explicitly. They are not optional if you want reliable results. If you omit them, Codex will fill the gap by inference — and that is often where instructional mismatch begins.</p>
+
+  <p>Just as important: <em>the same component names used in your planning notes should also appear in your actual prompts.</em> The conceptual explanation and the prompt structure should match one another exactly. Do not switch halfway into vague language like "make it nice" or "build something interactive" — that breaks alignment between the instructional concept and the implementation request.</p>
+
+  <p>Most weak AI-assisted build processes do not fail because the model "cannot code." They fail because the build request does not preserve the educational logic with enough precision. If the learning goal is described vaguely, the resulting interaction may be visually appealing but instructionally shallow. If tracking is not stated, the activity may appear functional until you try to package it for SCORM or restore state after re-entry. These components are not administrative metadata — they are the design contract between intent and implementation.</p>
+
+  <h3>5.1 Learning goal</h3>
+  <p>What should learners understand, practice, or decide differently after using the content?</p>
+  <ul>
+    <li>Understand the greenhouse effect</li>
+    <li>Compare country-level educational performance patterns</li>
+    <li>Practice arithmetic fluency</li>
+    <li>Make better triage decisions in a simulated case</li>
+    <li>Identify misleading data displays</li>
+  </ul>
+  <p>The learning goal should be written as a learner outcome, not as a production description. <em>"Build a cool simulation"</em> is not a learning goal. <em>"Help learners understand how variable changes alter system behavior"</em> is.</p>
+
+  <h3>5.2 Audience</h3>
+  <p>Who is the learner? Examples: middle school students, undergraduates, graduate students, K–12 teachers, healthcare trainees, public-facing adult learners. The same interaction can feel appropriate or completely wrong depending on audience. If you omit it, Codex tends to default toward a generic professional-user tone, which may not fit classroom, outreach, or novice-training contexts.</p>
+
+  <h3>5.3 Content type</h3>
+  <p>Explainer, quiz, scenario, simulation, data visualization, game. Content type is not just a label — it implies a different instructional rhythm. An explainer favors sequence. A quiz favors item progression and feedback timing. A branching scenario favors consequence and path memory. A simulation favors parameter response and interpretability.</p>
+
+  <h3>5.4 Core interactions</h3>
+  <p>What does the learner actually <em>do</em>? This should describe learner actions, not interface features. Saying "include a left panel and a timeline" describes furniture. Saying "the learner compares states across time and selects one case for deeper inspection" describes the actual learning action.</p>
+
+  <h3>5.5 Feedback or assessment behavior</h3>
+  <p>How will the learning object respond? Many e-learning builds become instructionally thin because they stop at interactivity and never specify response behavior. A good learning object does not merely wait for input — it reacts in a way that supports learning. That reaction could be corrective, explanatory, reflective, comparative, cumulative, or state-based.</p>
+
+  <h3>5.6 Content or data source</h3>
+  <p>Is Codex authoring the material, scaffolding around existing material, or using mock content temporarily? Those are very different situations. If you already have a dataset, a scenario script, or a set of quiz items, say so. If placeholder content is acceptable, say that too.</p>
+
+  <h3>5.7 Tracking and persistence requirements</h3>
+  <p>What should be remembered, measured, or reported? <em>Score, current step, selected answers, selected scenario path, visited states, completion, time on task, selected filters, resume state.</em> This is especially important for SCORM or any learning-engineering use case, and it is one of the most expensive components to retrofit later.</p>
+
+  <h3>5.8 Deployment target</h3>
+  <p>Moodle SCORM, standard website, or both. This is not just an operational detail — it affects how state is stored, how assets are organized, how dependencies are handled, and how testing should be done.</p>
+
+  <h3>5.9 Technical constraints</h3>
+  <p>Examples: single HTML file, plain HTML/CSS/JS only, no external libraries, specific library version, SCORM 1.2 compatibility, mobile support, local-only assets. These are not there to sound rigorous — they are there to prevent later mismatches.</p>
+
+  <h3>5.10 First-version scope</h3>
+  <p>What should the first build optimize for? <em>Working structure over polish. Placeholder content is acceptable. Mock data is acceptable. Keep code easy to revise. Do not package for SCORM yet.</em> This is one of the most effective ways to preserve momentum — it tells Codex what <em>not</em> to optimize too early.</p>
+
+  <h3>5.11 Canonical prompt schema</h3>
+  <p>Use this schema consistently. Keep the labels unchanged across your notes, your initial prompt, your revision prompts, and your packaging prompts.</p>
+
+  <div class="prompt">
+<span class="label">Learning goal:</span><br>
+<span class="label">Audience:</span><br>
+<span class="label">Content type:</span><br>
+<span class="label">Core interactions:</span><br>
+<span class="label">Feedback or assessment behavior:</span><br>
+<span class="label">Content or data source:</span><br>
+<span class="label">Tracking and persistence requirements:</span><br>
+<span class="label">Deployment target:</span><br>
+<span class="label">Technical constraints:</span><br>
+<span class="label">For the first version:</span>
+  </div>
+
+  <p>The strength of this schema is not only that it is comprehensive — it is that it is <em>reusable</em>. Once you get used to this structure, you can carry it from one project to the next and adjust only the contents inside each heading. That consistency makes collaboration much faster because you no longer need to reinvent the shape of the request every time.</p>
+</section>
+
+<!-- ============ §6 ============ -->
+<section class="chapter" id="s6">
+  <div class="chapter-header">
+    <div class="num">06</div>
+    <div>
+      <h2>The best overall workflow</h2>
+      <div class="tagline">Eight stages from definition to preserved stable versions.</div>
+    </div>
+  </div>
+
+  <p>Here is the most reliable end-to-end sequence.</p>
+
+  <div class="stages">
+    <div class="stage">
+      <div class="label">Stage<span class="num">1</span></div>
+      <div>
+        <h4>Define the learning artifact</h4>
+        <p>Clarify goal, audience, content type, core interactions, feedback, content source, tracking, deployment target, technical constraints, and first-version scope.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="label">Stage<span class="num">2</span></div>
+      <div>
+        <h4>Ask for a functional first version</h4>
+        <p>Prioritize structure, behavior, and correctness of the core interaction. Do <em>not</em> prioritize final polish, advanced packaging, or complex tracking.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="label">Stage<span class="num">3</span></div>
+      <div>
+        <h4>Open and review the output</h4>
+        <p>Use the browser. Look at layout, readability, flow, clarity of instructions, feedback behavior, performance. Interactive content should not be reviewed only by reading code — you need to see it, click through it, and notice where friction appears.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="label">Stage<span class="num">4</span></div>
+      <div>
+        <h4>Give concrete revision feedback</h4>
+        <p>Focus on categories: learning clarity, layout, tone, pacing, tracking, technical bugs.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="label">Stage<span class="num">5</span></div>
+      <div>
+        <h4>Stabilize the core learning experience</h4>
+        <p>Deliberately resist the temptation to package too soon. If the learning experience is still unstable, SCORM packaging will only hide the real problem under runtime complexity.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="label">Stage<span class="num">6</span></div>
+      <div>
+        <h4>Add runtime packaging or persistence</h4>
+        <p>Only after the main experience works: add SCORM packaging, resume logic, score/completion logic, and localStorage for web persistence.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="label">Stage<span class="num">7</span></div>
+      <div>
+        <h4>Test in the real target environment</h4>
+        <p>For SCORM: upload to Moodle, launch, interact, exit, re-enter, verify state restoration. For web: open from local preview or hosting, verify persistence and layout.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="label">Stage<span class="num">8</span></div>
+      <div>
+        <h4>Split stable versions</h4>
+        <p>Preserve the SCORM version, the web version, and (optionally) a source or template version. Do not keep rewriting one file forever for every use case.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ §7 ============ -->
+<section class="chapter" id="s7">
+  <div class="chapter-header">
+    <div class="num">07</div>
+    <div>
+      <h2>How to write your first prompt</h2>
+      <div class="tagline">The planning layer and the prompt layer must share a structure.</div>
+    </div>
+  </div>
+
+  <p>A strong first prompt should include the same non-negotiable components defined in Section 5. If you define ten components in your concept framing, your prompt should reflect those same ten components. A mismatch between planning language and prompt language usually leads to a mismatch between educational intent and implemented behavior.</p>
+
+  <h3>Generic first-prompt template</h3>
+
+  <div class="prompt">
+Create an interactive e-learning object.<br><br>
+<span class="label">Learning goal:</span> [what learners should understand, practice, or decide]<br>
+<span class="label">Audience:</span> [who the learners are]<br>
+<span class="label">Content type:</span> [quiz / simulation / explainer / branching scenario / game / data visualization]<br>
+<span class="label">Core interactions:</span>
+<ul>
+  <li>[interaction 1]</li>
+  <li>[interaction 2]</li>
+  <li>[interaction 3]</li>
+</ul>
+<span class="label">Feedback or assessment behavior:</span>
+<ul>
+  <li>[feedback rule 1]</li>
+  <li>[feedback rule 2]</li>
+</ul>
+<span class="label">Content or data source:</span>
+<ul><li>[existing content / mock content / dataset / scenario script / placeholder]</li></ul>
+<span class="label">Tracking and persistence requirements:</span>
+<ul>
+  <li>[what should be tracked]</li>
+  <li>[what should be restorable]</li>
+</ul>
+<span class="label">Deployment target:</span> [SCORM / web app / both]<br>
+<span class="label">Technical constraints:</span>
+<ul>
+  <li>[single HTML or multi-file]</li>
+  <li>[allowed libraries]</li>
+  <li>[runtime restrictions]</li>
+  <li>[mobile or desktop needs]</li>
+</ul>
+<span class="label">For the first version:</span>
+<ul>
+  <li>prioritize a working instructional structure over visual polish</li>
+  <li>use mock data or placeholder content if needed</li>
+  <li>keep the code easy to revise</li>
+</ul>
+  </div>
+
+  <p>This template works across many content types because it preserves alignment between instructional planning and prompt application. The details change; the prompt architecture stays stable. That stability is what makes the workflow teachable and repeatable.</p>
+</section>
+
+<!-- §8 -->
+<section class="chapter" id="s8">
+  <div class="chapter-header">
+    <div class="num">08</div>
+    <div>
+      <h2>Example first prompts by content type</h2>
+      <div class="tagline">Four reusable prompts to adapt.</div>
+    </div>
+  </div>
+
+  <h3>8.1 Quiz object</h3>
+  <div class="prompt">
+Create an interactive quiz-based e-learning object.<br><br>
+<span class="label">Learning goal:</span> Help learners practice recognizing misleading visualizations.<br>
+<span class="label">Audience:</span> Undergraduate students in an introductory research methods course.<br>
+<span class="label">Content type:</span> Quiz with explanations.<br>
+<span class="label">Core interactions:</span>
+<ul><li>present one visual example at a time</li><li>ask the learner to identify the issue</li><li>provide immediate explanation after each response</li></ul>
+<span class="label">Feedback:</span> correctness label; explanation; running score.<br>
+<span class="label">Content source:</span> authored quiz items; placeholder examples acceptable initially.<br>
+<span class="label">Tracking:</span> current item, score, completed items, restore position on resume.<br>
+<span class="label">Deployment target:</span> Both SCORM and web.<br>
+<span class="label">Technical constraints:</span> plain HTML/CSS/JS; single HTML for first version.<br>
+<span class="label">For the first version:</span> prioritize working quiz flow over final styling.
+  </div>
+
+  <h3>8.2 Branching scenario</h3>
+  <div class="prompt">
+Create a branching scenario for teacher decision-making.<br><br>
+<span class="label">Learning goal:</span> Help novice teachers practice responding to classroom disruption.<br>
+<span class="label">Audience:</span> Pre-service teachers.<br>
+<span class="label">Content type:</span> Branching scenario.<br>
+<span class="label">Core interactions:</span>
+<ul><li>show a classroom situation</li><li>offer 3 possible responses</li><li>branch to the consequence</li><li>continue for several decision rounds</li></ul>
+<span class="label">Feedback:</span> short immediate consequences; reflective summary at the end.<br>
+<span class="label">Tracking:</span> current decision point, decision path, restore on resume.<br>
+<span class="label">Deployment target:</span> Web app first, SCORM later.<br>
+<span class="label">For the first version:</span> prioritize branching logic clarity over visual polish.
+  </div>
+
+  <h3>8.3 Simulation</h3>
+  <div class="prompt">
+Create a learning simulation where the learner adjusts variables and observes system behavior.<br><br>
+<span class="label">Learning goal:</span> Help learners understand how interest rates, inflation, and unemployment interact in a simplified model.<br>
+<span class="label">Audience:</span> Introductory economics students.<br>
+<span class="label">Core interactions:</span>
+<ul><li>adjust variables with sliders</li><li>view changing indicators</li><li>reset</li><li>compare preset scenarios</li></ul>
+<span class="label">Tracking:</span> current control settings, completed guided tasks, restore state on resume.<br>
+<span class="label">Deployment target:</span> Web app first.<br>
+<span class="label">For the first version:</span> prioritize a working model and readable controls.
+  </div>
+
+  <h3>8.4 Data visualization</h3>
+  <div class="prompt">
+Create an interactive learning visualization.<br><br>
+<span class="label">Learning goal:</span> Help learners compare how educational performance changes across countries and years.<br>
+<span class="label">Audience:</span> Graduate students in education policy.<br>
+<span class="label">Core interactions:</span>
+<ul><li>browse country-level data</li><li>filter by year</li><li>inspect a selected country</li><li>compare regions</li></ul>
+<span class="label">Tracking:</span> selected item, active filters, current view state, restore on resume.<br>
+<span class="label">Deployment target:</span> Both SCORM and web.<br>
+<span class="label">For the first version:</span> prioritize clear structure and inspectable state over visual flourish.
+  </div>
+</section>
+
+<!-- §9 -->
+<section class="chapter" id="s9">
+  <div class="chapter-header">
+    <div class="num">09</div>
+    <div>
+      <h2>Why you should not ask for SCORM first</h2>
+      <div class="tagline">SCORM is the wrapper, not the creative core.</div>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <span class="label">Practical rule</span>
+    <p>Do not start with SCORM unless your content is already conceptually simple and stable.</p>
+  </div>
+
+  <p>SCORM adds packaging requirements, persistence constraints, slower iteration, and harder debugging if your base interaction is still changing. The better order is:</p>
+  <ol>
+    <li>Build the learning interaction</li>
+    <li>Stabilize the interaction</li>
+    <li>Add SCORM packaging</li>
+    <li>Test in Moodle</li>
+  </ol>
+  <div class="pullquote">SCORM is usually the wrapper, not the creative core.</div>
+</section>
+
+<!-- §10 -->
+<section class="chapter" id="s10">
+  <div class="chapter-header">
+    <div class="num">10</div>
+    <div>
+      <h2>How to review intermediate builds</h2>
+      <div class="tagline">Four review lenses: learning, interaction, design, technical.</div>
+    </div>
+  </div>
+
+  <p>After Codex creates a version, stop and review it before requesting more features. Review is how you decide whether the object is becoming more teachable and more usable for the learners you actually care about.</p>
+
+  <h3>10.1 Learning quality</h3>
+  <ul>
+    <li>Is the purpose clear?</li>
+    <li>Does the activity actually support the stated learning goal?</li>
+    <li>Are instructions understandable? Feedback useful? Pacing appropriate?</li>
+    <li>Does the interaction help learning rather than distract from it?</li>
+  </ul>
+  <p>This category should come first on purpose. A build can be technically correct and aesthetically polished while still missing the real learning need.</p>
+
+  <h3>10.2 Interaction quality</h3>
+  <ul>
+    <li>Is the flow intuitive? Are the controls clear? Is the next step obvious?</li>
+    <li>Are errors recoverable?</li>
+    <li>Does the learner understand what happened after each action?</li>
+  </ul>
+  <p>Confusion at the control level often gets misdiagnosed as a content problem.</p>
+
+  <h3>10.3 Design quality</h3>
+  <ul>
+    <li>Is the layout balanced? Content readable? Tone appropriate?</li>
+    <li>Does the design support attention rather than scatter it?</li>
+  </ul>
+  <p>Educational interfaces often benefit from restraint more than spectacle.</p>
+
+  <h3>10.4 Technical quality</h3>
+  <ul>
+    <li>Does the app load correctly? Is state preserved?</li>
+    <li>Visible runtime errors? Consistent logic? Works in the target container?</li>
+  </ul>
+</section>
+
+<!-- §11 -->
+<section class="chapter" id="s11">
+  <div class="chapter-header">
+    <div class="num">11</div>
+    <div>
+      <h2>How to give better revision feedback</h2>
+      <div class="tagline">Concrete and categorized beats vague.</div>
+    </div>
+  </div>
+
+  <div class="compare">
+    <div class="col weak">
+      <h5>Weak feedback</h5>
+      <blockquote>"This feels off."</blockquote>
+      <blockquote>"The design is weird."</blockquote>
+      <blockquote>"It is not very good yet."</blockquote>
+    </div>
+    <div class="col strong">
+      <h5>Strong feedback</h5>
+      <blockquote><strong>Learning clarity:</strong> instructions are too vague; the learner does not know what success looks like.</blockquote>
+      <blockquote><strong>Layout:</strong> the top header is too large; the side panel is consuming too much width.</blockquote>
+      <blockquote><strong>Interaction:</strong> feedback appears too late; the reset button is hard to find.</blockquote>
+      <blockquote><strong>Tone:</strong> the visual style is too dark for the subject matter.</blockquote>
+      <blockquote><strong>Persistence:</strong> keep the learner's current step and score when they return.</blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- §12 -->
+<section class="chapter" id="s12">
+  <div class="chapter-header">
+    <div class="num">12</div>
+    <div>
+      <h2>Most useful follow-up prompts</h2>
+      <div class="tagline">Seven recurring revision categories.</div>
+    </div>
+  </div>
+
+  <h3>12.1 Structure</h3>
+  <div class="prompt">Please revise the structure of the activity. Keep the topic and content, but change the interaction flow so the learner moves through: (1) introduction, (2) guided practice, (3) independent attempt, (4) summary.</div>
+
+  <h3>12.2 Feedback</h3>
+  <div class="prompt">Improve the feedback logic. I want the learner to receive immediate explanatory feedback after each action, not only a correctness label. Keep the scoring model, but make the feedback more instructionally useful.</div>
+
+  <h3>12.3 Layout</h3>
+  <div class="prompt">Redesign the layout so the learning task is more central. Reduce visual clutter, improve spacing, and make the main interaction area dominant. Keep the same content and logic.</div>
+
+  <h3>12.4 Tone</h3>
+  <div class="prompt">The current tone is too dark and cinematic. Please make the interface brighter, clearer, and more appropriate for educational use. Reduce glow, visual noise, and unnecessary effects.</div>
+
+  <h3>12.5 Tracking</h3>
+  <div class="prompt">Add interaction tracking for: total clicks, completed steps, selected responses, time spent in each section. Store the tracking so it can later be mapped to SCORM or local persistence.</div>
+
+  <h3>12.6 Accessibility</h3>
+  <div class="prompt">Improve accessibility. Please review color contrast, keyboard reachability, focus visibility, button labeling, and screen-readable structure. Do not change the instructional logic unless needed.</div>
+
+  <h3>12.7 Localization</h3>
+  <div class="prompt">Convert the UI and learner-facing text to English. Keep the data and interaction logic unchanged. Update labels, buttons, instructions, and feedback text consistently.</div>
+</section>
+
+<!-- §13 -->
+<section class="chapter" id="s13">
+  <div class="chapter-header">
+    <div class="num">13</div>
+    <div>
+      <h2>How to ask for SCORM packaging</h2>
+      <div class="tagline">Translation step from interactive content to LMS-compatible courseware.</div>
+    </div>
+  </div>
+
+  <p>Once the learning object works well, ask Codex to package it for SCORM. Packaging is not merely a zip operation — it forces you to decide which parts of learner activity count as progress, which parts should be restorable, and how the runtime should behave on exit and return.</p>
+
+  <h3>Default baseline</h3>
+  <p>Unless otherwise noted, this tutorial assumes <strong>SCORM 1.2</strong> as the default. It remains the safest starting point because it is broadly supported and easier to reason about when you are first learning how packaging, status, score, and resume state fit together. SCORM 2004 is real and still relevant, but should not be casually mixed into an introductory workflow.</p>
+
+  <h3>SCORM is a wrapper, not a rendering style</h3>
+  <p>SCORM does not tell you whether your learning object should be plain HTML, a quiz UI, a simulation, a D3 chart, a Three.js scene, or a framework-based interface. It is primarily a packaging and runtime convention for LMS delivery.</p>
+  <div class="pullquote">The rendering approach should be chosen based on what best supports the learning task. SCORM comes afterward as the delivery wrapper.</div>
+
+  <h3>When SCORM is not enough: xAPI and cmi5</h3>
+  <table>
+    <tr><th>Standard</th><th>Strong when</th></tr>
+    <tr><td><strong>SCORM</strong></td><td>Conventional LMS packaging and baseline runtime.</td></tr>
+    <tr><td><strong>xAPI</strong></td><td>Richer event statements and learning-experience data.</td></tr>
+    <tr><td><strong>cmi5</strong></td><td>xAPI richness with a stronger LMS launch-and-assignment model.</td></tr>
+  </table>
+
+  <h3>Generic SCORM conversion prompt</h3>
+  <div class="prompt">
+Convert this learning object into a SCORM 1.2 package.<br><br>
+<span class="label">Requirements:</span>
+<ul><li>single SCO</li><li>imsmanifest.xml at the package root</li><li>launch file: index.html</li><li>lightweight scormdriver.js wrapper</li></ul>
+<span class="label">Track at least:</span>
+<ul><li>learner progress</li><li>score or completion if applicable</li><li>key interaction state needed for resume</li></ul>
+<span class="label">Persistence:</span> store state in suspend_data; restore on re-entry.<br>
+<span class="label">Compatibility:</span> package should be suitable for Moodle upload.
+  </div>
+
+  <h3>What to track depends on type</h3>
+  <table>
+    <tr><th>Type</th><th>Track</th></tr>
+    <tr><td>Quizzes</td><td>score, attempt completion, question index, selected answers</td></tr>
+    <tr><td>Scenarios</td><td>decision path, current step, completion</td></tr>
+    <tr><td>Simulations</td><td>current variables, learner position, completed guided tasks</td></tr>
+    <tr><td>Visualizations</td><td>selected item, filters, current view, required components explored</td></tr>
+  </table>
+  <p>Useful SCORM state should reflect the instructional structure, not interface exhaust.</p>
+</section>
+
+<!-- §14 -->
+<section class="chapter" id="s14">
+  <div class="chapter-header">
+    <div class="num">14</div>
+    <div>
+      <h2>Ask for a separate web version</h2>
+      <div class="tagline">Fork — do not overwrite.</div>
+    </div>
+  </div>
+
+  <div class="prompt">
+Create a separate web deployment version.<br><br>
+<span class="label">Important:</span>
+<ul>
+  <li>do not delete or overwrite the SCORM version</li>
+  <li>create a separate web version for browser deployment</li>
+  <li>replace SCORM persistence with localStorage</li>
+  <li>preserve the same learner-facing behavior where possible</li>
+  <li>keep the visual design aligned with the SCORM version</li>
+</ul>
+  </div>
+
+  <h3>A note on Google Classroom</h3>
+  <p>Google Classroom should usually be treated as a web-link destination, not as a SCORM runtime target. If the real goal is "students open the activity from Classroom," the better workflow is: create the object, make a browser-deployable web version, host it, and share the hosted link. Classroom is not a SCORM-capable LMS activity player.</p>
+</section>
+
+<!-- §15 -->
+<section class="chapter" id="s15">
+  <div class="chapter-header">
+    <div class="num">15</div>
+    <div>
+      <h2>Moodle testing workflow</h2>
+      <div class="tagline">The LMS is part of the product.</div>
+    </div>
+  </div>
+
+  <p>Moodle testing should be its own phase, not a final checkbox. The same object can behave differently once embedded in the LMS context — around launch behavior, frame size, persistence, grading, and re-entry. Unless otherwise noted, the guidance here assumes <strong>Moodle 4.3+</strong> as the default reference point.</p>
+
+  <h3>Recommended test flow</h3>
+  <ol>
+    <li>Open your Moodle test course</li>
+    <li>Add a SCORM package activity</li>
+    <li>Upload the zip</li>
+    <li>Launch it</li>
+    <li>Interact normally</li>
+    <li>Exit</li>
+    <li>Re-enter</li>
+    <li>Verify whether the saved state returns correctly</li>
+  </ol>
+
+  <h3>What to check</h3>
+  <ul>
+    <li>Does the package upload cleanly? Launch? Render inside Moodle?</li>
+    <li>Are instructions readable in the LMS frame?</li>
+    <li>Does completion behave correctly? Does score reporting?</li>
+    <li>Does resume work — does the learner return to the correct place?</li>
+  </ul>
+  <p>Do not test only once. Run several short loops: launch, interact lightly, exit, re-enter, then try again after a more substantial interaction sequence.</p>
+
+  <h3>LMS comparison snapshot</h3>
+  <table>
+    <tr><th>Platform</th><th>Role</th><th>Main caution</th></tr>
+    <tr><td><strong>Moodle 4.3+</strong></td><td>Primary reference; best first sandbox for local upload, debugging, and resume testing.</td><td>Do not assume Moodle behavior generalizes.</td></tr>
+    <tr><td><strong>Canvas</strong></td><td>Secondary validation when institutional deployment matters.</td><td>Launch flow, embedding, and grading should be re-tested.</td></tr>
+    <tr><td><strong>Blackboard</strong></td><td>Secondary validation for enterprise compatibility.</td><td>Packaging may import but runtime details differ.</td></tr>
+    <tr><td><strong>SCORM Cloud</strong></td><td>Neutral validation layer.</td><td>Not a replacement for the real destination LMS.</td></tr>
+  </table>
+
+  <div class="callout">
+    <span class="label">Honest disclaimer</span>
+    <p>This tutorial offers a validation <em>method</em>, not an empirical cross-platform result set. It tells you how to think about broader compatibility; it does not prove that a given package has already succeeded across Moodle, Canvas, and Blackboard.</p>
+  </div>
+</section>
+
+<!-- §16 -->
+<section class="chapter" id="s16">
+  <div class="chapter-header">
+    <div class="num">16</div>
+    <div>
+      <h2>Suggested file organization</h2>
+      <div class="tagline">Project layout vs. package-internal structure.</div>
+    </div>
+  </div>
+
+  <p>A clean file structure makes iteration easier.</p>
+
+  <pre data-lang="tree">moodle-install/
+  tutorials/
+    codex-collaboration-tutorial-generic-elearning.md
+  packages/
+    my-learning-object-scorm/
+      imsmanifest.xml
+      index.html
+      scormdriver.js
+    my-learning-object-scorm.zip
+    my-learning-object-web/
+      index.html
+      my-learning-object-web.html</pre>
+
+  <h3>Minimal SCORM 1.2 package structure</h3>
+  <pre data-lang="zip">minimal-scorm-quiz/
+  imsmanifest.xml
+  index.html
+  scormdriver.js
+  assets/
+    optional-image.png
+    optional-style.css</pre>
+
+  <div class="callout warn">
+    <span class="label">Critical rule</span>
+    <p><code>imsmanifest.xml</code> must be at the package root inside the zip. Buried one directory too deep and the LMS may reject the package or fail to launch it.</p>
+  </div>
+</section>
+
+<!-- §17 -->
+<section class="chapter" id="s17">
+  <div class="chapter-header">
+    <div class="num">17</div>
+    <div>
+      <h2>How to prevent chaos during revision</h2>
+      <div class="tagline">Always name what must stay stable.</div>
+    </div>
+  </div>
+
+  <div class="prompt">
+Please improve the layout, but preserve:
+<ul>
+  <li>the current data model</li>
+  <li>the scoring logic</li>
+  <li>the sequence of steps</li>
+  <li>the current state persistence approach</li>
+</ul>
+Only change spacing, hierarchy, and panel structure.
+  </div>
+
+  <p>This habit is particularly important once the project has more than one version or delivery target. Without explicit scope control, a revision aimed at tone or layout can accidentally alter state management, pacing, or packaging assumptions.</p>
+</section>
+
+<!-- §18 -->
+<section class="chapter" id="s18">
+  <div class="chapter-header">
+    <div class="num">18</div>
+    <div>
+      <h2>Prompt patterns by content family</h2>
+      <div class="tagline">Six reusable patterns.</div>
+    </div>
+  </div>
+
+  <h3>18.1 Interactive explainer</h3>
+  <div class="prompt">Create an interactive explainer. Section-based progression, small interactive reveals, short guided explanations, summary at the end. Lightweight comprehension checks as needed. Track current section and restore on resume. Plain HTML/CSS/JS; prioritize concision and clarity.</div>
+
+  <h3>18.2 Practice quiz</h3>
+  <div class="prompt">Create a practice quiz object. 10 items, one at a time, submit-and-feedback, retry after finishing. Immediate explanatory feedback, final score. Track score and current item; restore on resume. Keep code easy to package for SCORM later.</div>
+
+  <h3>18.3 Branching scenario</h3>
+  <div class="prompt">Create a branching decision scenario. Short setup, 3 choices per step, visible consequences, 4–6 total decision points. Immediate consequence feedback, reflective summary. Track current decision point and chosen path; restore on resume.</div>
+
+  <h3>18.4 Simulation</h3>
+  <div class="prompt">Create an interactive learning simulation. Adjustable controls, clear indicators, immediate visual response, guided challenges. Track current parameters and challenge completion; restore state on resume. Favor clarity over spectacle.</div>
+
+  <h3>18.5 Mini-game</h3>
+  <div class="prompt">Create a mini-game for learning practice. Quick rounds, visible score, simple progression, replayability. Immediate gameplay feedback, end-of-round score and replay option. Keep it lightweight. Prioritize a stable loop and scoring.</div>
+
+  <h3>18.6 Data visualization</h3>
+  <div class="prompt">Create an interactive learning-oriented data visualization. Meaningful filtering, rich tooltips, clear narrative structure, support for comparison. Track selection, filters, active view; restore on resume. The visualization should teach, not impress.</div>
+</section>
+
+<!-- §19 -->
+<section class="chapter" id="s19">
+  <div class="chapter-header">
+    <div class="num">19</div>
+    <div>
+      <h2>Where Three.js fits in</h2>
+      <div class="tagline">One possible tool, not the main point.</div>
+    </div>
+  </div>
+
+  <p>Whenever a project uses a library such as Three.js or D3, the prompt should specify the exact tested version or version family. Do not rely on generic wording like "use D3" if reproducibility matters — API differences create confusing behavior changes.</p>
+
+  <div class="compare">
+    <div class="col strong">
+      <h5>Use Three.js when</h5>
+      <ul>
+        <li>the content genuinely benefits from 3D space</li>
+        <li>a globe, scene, or spatial model improves learning</li>
+        <li>interaction with 3D objects adds instructional value</li>
+        <li>global geographic visualizations</li>
+        <li>anatomical or spatial exploration</li>
+      </ul>
+    </div>
+    <div class="col strong">
+      <h5>Three.js is probably unnecessary for</h5>
+      <ul>
+        <li>standard quizzes</li>
+        <li>basic branching scenarios</li>
+        <li>flashcards</li>
+        <li>text-heavy explainers</li>
+        <li>simple scoring interactions</li>
+      </ul>
+    </div>
+  </div>
+  <div class="pullquote">Three.js is an example specialization, not the tutorial's center of gravity.</div>
+</section>
+
+<!-- §20 -->
+<section class="chapter" id="s20">
+  <div class="chapter-header">
+    <div class="num">20</div>
+    <div>
+      <h2>Specialized track: Three.js as one case</h2>
+      <div class="tagline">The same generic workflow still applies.</div>
+    </div>
+  </div>
+
+  <ol>
+    <li>define the learning goal</li>
+    <li>define the data or spatial model</li>
+    <li>ask for a working interaction first</li>
+    <li>review layout and performance in the browser</li>
+    <li>refine visuals only after the structure works</li>
+    <li>package for SCORM only after the interaction stabilizes</li>
+  </ol>
+</section>
+
+<!-- §21 -->
+<section class="chapter" id="s21">
+  <div class="chapter-header">
+    <div class="num">21</div>
+    <div>
+      <h2>Accessibility and learning usefulness</h2>
+      <div class="tagline">Ask explicitly.</div>
+    </div>
+  </div>
+
+  <div class="prompt">Make the interface accessible and readable. Use clear contrast, visible focus states, understandable labels, and learner-friendly language. Keep the interaction cognitively manageable. Avoid overly decorative effects. Make feedback instructionally meaningful, not just correct/incorrect.</div>
+
+  <h3>Privacy and data-leak awareness</h3>
+  <p>SCORM packages are still web apps and carry ordinary web risks. If your project becomes more production-oriented, review the package for: unexpected external requests, hidden analytics calls, hardcoded secrets, learner identifiers embedded in state, and unsafe use of query strings or stored data.</p>
+</section>
+
+<!-- §22 -->
+<section class="chapter" id="s22">
+  <div class="chapter-header">
+    <div class="num">22</div>
+    <div>
+      <h2>Versioning strategy</h2>
+      <div class="tagline">Do not destroy the working version just to make the next experiment.</div>
+    </div>
+  </div>
+
+  <p>At minimum, keep one working source version, one SCORM version, and one web version. If the content grows, also keep an earlier stable checkpoint, a simplified demo, and a data-only reference file.</p>
+  <div class="pullquote">Preserve stable versions as soon as they work and treat later modifications as forks rather than overwrites.</div>
+</section>
+
+<!-- §23 -->
+<section class="chapter" id="s23">
+  <div class="chapter-header">
+    <div class="num">23</div>
+    <div>
+      <h2>A reusable master prompt</h2>
+      <div class="tagline">The same schema, every project.</div>
+    </div>
+  </div>
+
+  <div class="prompt">
+Create an interactive e-learning object.<br><br>
+<span class="label">Learning goal:</span> [what the learner should understand, practice, or decide]<br>
+<span class="label">Audience:</span> [who the learner is]<br>
+<span class="label">Content type:</span> [explainer / quiz / branching / simulation / mini-game / data viz]<br>
+<span class="label">Core interactions:</span>
+<ul><li>[interaction 1]</li><li>[interaction 2]</li><li>[interaction 3]</li></ul>
+<span class="label">Feedback or assessment behavior:</span>
+<ul><li>[feedback rule 1]</li><li>[feedback rule 2]</li></ul>
+<span class="label">Content or data source:</span>
+<ul><li>[authored / mock / dataset / scenario script / placeholder]</li></ul>
+<span class="label">Tracking and persistence:</span>
+<ul><li>[tracked]</li><li>[restorable]</li></ul>
+<span class="label">Deployment target:</span> [SCORM / web / both]<br>
+<span class="label">Technical constraints:</span>
+<ul><li>[single HTML / multi-file]</li><li>[libraries]</li><li>[runtime]</li><li>[design / device]</li></ul>
+<span class="label">For the first version:</span>
+<ul><li>prioritize working structure over polish</li><li>use mock content if necessary</li><li>keep the code easy to revise</li></ul>
+  </div>
+</section>
+
+<!-- §24 -->
+<section class="chapter" id="s24">
+  <div class="chapter-header">
+    <div class="num">24</div>
+    <div>
+      <h2>A full example collaboration</h2>
+      <div class="tagline">Six steps from first build to web fork.</div>
+    </div>
+  </div>
+
+  <div class="stages">
+    <div class="stage">
+      <div class="label">Step<span class="num">1</span></div>
+      <div><h4>First build</h4><p>Issue the master prompt. Focus on a working instructional flow, not final polish.</p></div>
+    </div>
+    <div class="stage">
+      <div class="label">Step<span class="num">2</span></div>
+      <div><h4>Instructional clarity</h4><p>"The first version works. Now improve the learner instructions, screen hierarchy, and feedback clarity. Keep the underlying interaction logic unchanged."</p></div>
+    </div>
+    <div class="stage">
+      <div class="label">Step<span class="num">3</span></div>
+      <div><h4>Layout pass</h4><p>"Reduce clutter, improve spacing, and make the main learner task visually dominant."</p></div>
+    </div>
+    <div class="stage">
+      <div class="label">Step<span class="num">4</span></div>
+      <div><h4>Persistence</h4><p>"Add persistence so the learner can return to the same place later. For the pre-SCORM web version, use localStorage."</p></div>
+    </div>
+    <div class="stage">
+      <div class="label">Step<span class="num">5</span></div>
+      <div><h4>SCORM conversion</h4><p>"Convert this into a SCORM 1.2 package. Track the state necessary for resume."</p></div>
+    </div>
+    <div class="stage">
+      <div class="label">Step<span class="num">6</span></div>
+      <div><h4>Web fork</h4><p>"Create a separate web deployment version. Do not overwrite the SCORM version. Replace SCORM persistence with localStorage."</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- §25 -->
+<section class="chapter" id="s25">
+  <div class="chapter-header">
+    <div class="num">25</div>
+    <div>
+      <h2>Troubleshooting prompts</h2>
+      <div class="tagline">Five pointed recovery prompts.</div>
+    </div>
+  </div>
+
+  <h3>If the logic is confusing</h3>
+  <div class="prompt">The activity works technically, but the learner flow is confusing. Please review the sequence of instructions, transitions, and feedback so the purpose of each step is clearer.</div>
+
+  <h3>If the design feels too busy</h3>
+  <div class="prompt">The interface feels too busy for educational use. Please simplify the visual hierarchy, reduce decorative effects, and keep attention on the core task.</div>
+
+  <h3>If persistence fails</h3>
+  <div class="prompt">State persistence is not working reliably. Please review the save and restore flow so the learner returns to the same step and state.</div>
+
+  <h3>If SCORM resume fails</h3>
+  <div class="prompt">The SCORM package launches, but the learner does not return to the correct state after re-entry. Please review suspend_data handling and restore position, score, and relevant UI state.</div>
+
+  <h3>If the web version should be preserved separately</h3>
+  <div class="prompt">Create a separate web deployment version. Do not overwrite the SCORM package. Use localStorage in the web version while preserving user-facing behavior.</div>
+</section>
+
+<!-- §26 -->
+<section class="chapter" id="s26">
+  <div class="chapter-header">
+    <div class="num">26</div>
+    <div>
+      <h2>Final quality checklist</h2>
+      <div class="tagline">Four review dimensions before you call it done.</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="cell">
+      <h5><span class="tag">I</span> Learning design</h5>
+      <ul>
+        <li>Learning goal is clear</li>
+        <li>Activity actually supports that goal</li>
+        <li>Learner knows what to do</li>
+        <li>Feedback is useful</li>
+        <li>Pacing makes sense</li>
+      </ul>
+    </div>
+    <div class="cell">
+      <h5><span class="tag">II</span> Interaction design</h5>
+      <ul>
+        <li>Controls are understandable</li>
+        <li>Sequence is coherent</li>
+        <li>Learner can recover from mistakes</li>
+        <li>State behaves as expected</li>
+      </ul>
+    </div>
+    <div class="cell">
+      <h5><span class="tag">III</span> Visual design</h5>
+      <ul>
+        <li>Main task is visually central</li>
+        <li>Layout feels balanced</li>
+        <li>Interface is readable</li>
+        <li>Style fits the educational context</li>
+      </ul>
+    </div>
+    <div class="cell">
+      <h5><span class="tag">IV</span> Technical delivery</h5>
+      <ul>
+        <li>Object loads correctly</li>
+        <li>SCORM works if applicable</li>
+        <li>Web deployment works if applicable</li>
+        <li>Persistence works</li>
+        <li>Stable versions preserved separately</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- §27 -->
+<section class="chapter" id="s27">
+  <div class="chapter-header">
+    <div class="num">27</div>
+    <div>
+      <h2>Final advice</h2>
+      <div class="tagline">Preserve design logic across stages.</div>
+    </div>
+  </div>
+
+  <p>The strongest collaboration pattern is not "Write everything perfectly in one shot." It is:</p>
+  <div class="pullquote-wide"><em>"Help me build this well, one stable step at a time."</em></div>
+  <p>Good collaboration is not mainly about wording clever prompts. It is about <em>preserving design logic across stages</em>. The more faithfully you carry the learning goal, audience, interaction model, feedback model, and deployment assumptions from concept to prompt to revision to packaging, the more coherent the final result becomes. Those are the habits that turn code generation into courseware development.</p>
+</section>
+
+<!-- §28 -->
+<section class="chapter" id="s28">
+  <div class="chapter-header">
+    <div class="num">28</div>
+    <div>
+      <h2>Short summary of the method</h2>
+      <div class="tagline">Nine lines.</div>
+    </div>
+  </div>
+
+  <ol>
+    <li>Define the learning goal, audience, content type, and deployment target.</li>
+    <li>Ask for a working first version.</li>
+    <li>Review it in the browser.</li>
+    <li>Give specific feedback about learning, layout, interaction, and tone.</li>
+    <li>Stabilize the instructional experience first.</li>
+    <li>Add SCORM or local persistence later.</li>
+    <li>Test in Moodle if needed.</li>
+    <li>Keep SCORM and web versions separate.</li>
+    <li>Reuse the same collaboration method for the next learning object.</li>
+  </ol>
+</section>
+
+<!-- APPENDICES -->
+<div class="appendix-intro">
+  <div class="eyebrow">Part Two</div>
+  <h2>Appendices &amp; operational references</h2>
+</div>
+
+<!-- Appendix A -->
+<section class="chapter appendix" id="appA">
+  <div class="chapter-header">
+    <div class="num">A</div>
+    <div>
+      <h2>Minimal quiz example</h2>
+      <div class="tagline">A small, readable, resumable learning object.</div>
+    </div>
+  </div>
+
+  <p>A fully written minimal example — not production-ready, but showing what a small resumable learning object can look like. One question at a time, immediate feedback, final score, resume-friendly state, external <code>scormdriver.js</code>.</p>
+
+<pre data-lang="index.html">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;Minimal SCORM Quiz&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;main&gt;
+    &lt;section class="card" aria-live="polite"&gt;
+      &lt;h1&gt;SCORM Quiz Starter&lt;/h1&gt;
+      &lt;div id="app"&gt;&lt;/div&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;script src="scormdriver.js"&gt;&lt;/script&gt;
+  &lt;script&gt;
+    const questions = [
+      { prompt: "Which planet is known as the Red Planet?",
+        choices: ["Mars","Venus","Mercury","Jupiter"],
+        correctIndex: 0,
+        explanation: "Iron oxide gives Mars its reddish appearance." },
+      /* ... more items ... */
+    ];
+
+    const passingScore = 70;
+    const state = { currentIndex: 0, answers: [], score: 0, completed: false };
+    const scorm = window.scorm12;
+
+    function init() {
+      scorm.init();
+      scorm.setStatus("incomplete");
+      restoreState();
+      render();
+    }
+
+    function restoreState() {
+      const raw = scorm.getSuspendData();
+      if (!raw) return;
+      try { Object.assign(state, JSON.parse(raw)); }
+      catch (e) { console.warn("bad suspend_data", e); }
+    }
+
+    function persistState() {
+      scorm.setSuspendData(JSON.stringify(state));
+      scorm.setLocation(state.completed ? "summary" : String(state.currentIndex));
+      scorm.commit();
+    }
+
+    function answerQuestion(choiceIndex) {
+      const q = questions[state.currentIndex];
+      const isCorrect = choiceIndex === q.correctIndex;
+      state.answers.push({ questionIndex: state.currentIndex, choiceIndex, isCorrect });
+      if (isCorrect) state.score += Math.round(100 / questions.length);
+      persistState();
+      render();
+    }
+
+    function finishQuiz() {
+      state.completed = true;
+      const finalScore = Math.min(state.score, 100);
+      scorm.setScore(finalScore, 0, 100);
+      scorm.setStatus(finalScore &gt;= passingScore ? "passed" : "failed");
+      scorm.setExit("suspend");
+      persistState();
+      render();
+    }
+
+    window.addEventListener("beforeunload", () =&gt; {
+      if (!state.completed) { scorm.setExit("suspend"); persistState(); }
+      scorm.finish();
+    });
+
+    init();
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+
+  <p class="marginal">The full file lives under <code>examples/minimal-scorm-quiz/index.html</code>. This reproduces the instructional core.</p>
+</section>
+
+<!-- Appendix B -->
+<section class="chapter appendix" id="appB">
+  <div class="chapter-header">
+    <div class="num">B</div>
+    <div>
+      <h2>Minimal <code>scormdriver.js</code></h2>
+      <div class="tagline">A starter reference, not a full compatibility layer.</div>
+    </div>
+  </div>
+
+<pre data-lang="scormdriver.js">(function () {
+  function findApi(win) {
+    var maxTries = 20, current = win, tries = 0;
+    while (current &amp;&amp; tries &lt; maxTries) {
+      if (current.API) return current.API;
+      tries += 1;
+      if (current.parent &amp;&amp; current.parent !== current) current = current.parent;
+      else break;
+    }
+    current = win.opener; tries = 0;
+    while (current &amp;&amp; tries &lt; maxTries) {
+      if (current.API) return current.API;
+      tries += 1;
+      if (current.parent &amp;&amp; current.parent !== current) current = current.parent;
+      else break;
+    }
+    return null;
+  }
+
+  function createDriver() {
+    var api = null, initialized = false;
+    function safeCall(fn, fallback) {
+      try { return fn(); }
+      catch (e) { console.warn("SCORM call failed", e); return fallback; }
+    }
+
+    return {
+      init: function () {
+        if (initialized) return true;
+        api = findApi(window);
+        if (!api) { console.warn("No SCORM 1.2 API. Browser-only mode."); return false; }
+        initialized = safeCall(function () { return api.LMSInitialize("") === "true"; }, false);
+        return initialized;
+      },
+      finish:   function () { return api &amp;&amp; safeCall(function(){return api.LMSFinish("")==="true";}, false); },
+      get:      function (el) { return api ? safeCall(function(){return api.LMSGetValue(el)||"";}, "") : ""; },
+      set:      function (el, v) { return api ? safeCall(function(){return api.LMSSetValue(el, String(v))==="true";}, false) : false; },
+      commit:   function () { return api &amp;&amp; safeCall(function(){return api.LMSCommit("")==="true";}, false); },
+      setStatus:      function (s) { return this.set("cmi.core.lesson_status", s); },
+      setScore:       function (r, mn, mx) { this.set("cmi.core.score.raw", r); this.set("cmi.core.score.min", mn); this.set("cmi.core.score.max", mx); },
+      setLocation:    function (l) { return this.set("cmi.core.lesson_location", l); },
+      setSuspendData: function (v) { return this.set("cmi.suspend_data", v); },
+      getSuspendData: function ()  { return this.get("cmi.suspend_data"); },
+      setExit:        function (v) { return this.set("cmi.core.exit", v); }
+    };
+  }
+
+  window.scorm12 = createDriver();
+})();</pre>
+</section>
+
+<!-- Appendix C -->
+<section class="chapter appendix" id="appC">
+  <div class="chapter-header">
+    <div class="num">C</div>
+    <div>
+      <h2>Minimal <code>imsmanifest.xml</code></h2>
+      <div class="tagline">SCORM 1.2 manifest for the quiz.</div>
+    </div>
+  </div>
+
+<pre data-lang="imsmanifest.xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;manifest identifier="minimal-scorm-quiz"
+          version="1.0"
+          xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+          xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;metadata&gt;
+    &lt;schema&gt;ADL SCORM&lt;/schema&gt;
+    &lt;schemaversion&gt;1.2&lt;/schemaversion&gt;
+  &lt;/metadata&gt;
+
+  &lt;organizations default="quiz-org"&gt;
+    &lt;organization identifier="quiz-org"&gt;
+      &lt;title&gt;Minimal SCORM Quiz&lt;/title&gt;
+      &lt;item identifier="quiz-item" identifierref="quiz-resource"&gt;
+        &lt;title&gt;Minimal SCORM Quiz&lt;/title&gt;
+      &lt;/item&gt;
+    &lt;/organization&gt;
+  &lt;/organizations&gt;
+
+  &lt;resources&gt;
+    &lt;resource identifier="quiz-resource"
+              type="webcontent"
+              adlcp:scormtype="sco"
+              href="index.html"&gt;
+      &lt;file href="index.html" /&gt;
+      &lt;file href="scormdriver.js" /&gt;
+    &lt;/resource&gt;
+  &lt;/resources&gt;
+&lt;/manifest&gt;</pre>
+</section>
+
+<!-- Appendix D -->
+<section class="chapter appendix" id="appD">
+  <div class="chapter-header">
+    <div class="num">D</div>
+    <div>
+      <h2>Companion files &amp; cheat sheet</h2>
+      <div class="tagline">Where things live.</div>
+    </div>
+  </div>
+
+  <p>This tutorial has companion example files in:</p>
+  <pre data-lang="path">examples/minimal-scorm-quiz/
+  index.html
+  scormdriver.js
+  imsmanifest.xml</pre>
+  <p>A separate one-page prompt-schema cheat sheet lets Section 5.11 be used independently.</p>
+</section>
+
+<!-- Appendix E -->
+<section class="chapter appendix" id="appE">
+  <div class="chapter-header">
+    <div class="num">E</div>
+    <div>
+      <h2>Operational prompt library</h2>
+      <div class="tagline">Ten direct working prompts.</div>
+    </div>
+  </div>
+
+  <p>Earlier sections explain prompt structure conceptually. This appendix is operational — for the moment when you are already inside a Codex conversation and need practical language.</p>
+
+  <h3>E.1 First build</h3>
+  <div class="prompt">Create the first working version of this e-learning object. [Insert the master schema: learning goal, audience, content type, interactions, feedback, source, tracking, deployment, constraints, first-version scope.] Prioritize a working instructional structure over polish; use placeholder content if needed.</div>
+
+  <h3>E.2 Revision with scope control</h3>
+  <div class="prompt">
+Revise the current learning object.<br>
+<span class="label">Change:</span> [what should change]<br>
+<span class="label">Preserve:</span> [what should stay stable]<br>
+<span class="label">Reason:</span> [why this change matters]<br><br>
+Afterward summarize: (1) what changed, (2) what was preserved, (3) any risk that remains.
+  </div>
+
+  <h3>E.3 Explicit assumptions</h3>
+  <div class="prompt">Please do the requested work directly, but make your assumptions explicit at the end. If you have to infer anything about the learning goal, audience, state model, or packaging target, list those assumptions clearly.</div>
+
+  <h3>E.4 SCORM zip structure audit</h3>
+  <div class="prompt">
+Inspect this SCORM zip and verify correctness for SCORM 1.2 and Moodle 4.3+ upload. Check:
+<ul>
+  <li>imsmanifest.xml at the package root</li>
+  <li>manifest declares SCORM 1.2 correctly</li>
+  <li>launch file referenced in the manifest exists</li>
+  <li>required files are present</li>
+  <li>single-SCO or multi-SCO</li>
+  <li>internal paths match manifest references</li>
+  <li>obvious packaging mistakes</li>
+</ul>
+Do not rewrite. First report: (1) findings, (2) risks, (3) exact files or manifest lines that look wrong, (4) whether the package is likely Moodle-ready as-is.
+  </div>
+
+  <h3>E.5 Manifest audit</h3>
+  <div class="prompt">Review the imsmanifest.xml. Verify: SCORM version assumptions, schema and schemaversion, organization and item structure, resource declarations, launch href correctness, whether the manifest matches the actual files. Explain findings in plain language.</div>
+
+  <h3>E.6 Runtime state audit</h3>
+  <div class="prompt">
+Review this SCORM activity for resume and runtime-state readiness:
+<ul>
+  <li>what learner state is currently saved</li>
+  <li>whether suspend_data is actually used</li>
+  <li>whether lesson_location is used meaningfully</li>
+  <li>whether score and lesson_status are updated coherently</li>
+  <li>whether exit is set sensibly</li>
+  <li>whether the object is likely to restore the learner correctly</li>
+</ul>
+Report: (1) tracked, (2) missing, (3) fragile, (4) fix before LMS testing.
+  </div>
+
+  <h3>E.7 Moodle readiness</h3>
+  <div class="prompt">Moodle-readiness review for this SCORM package. Assume Moodle 4.3+. Evaluate: import readiness, launch readiness, visibility of instructions in the LMS frame, likelihood of resume working, score/completion readiness, setting assumptions to call out. Do not just say "looks fine" — give a practical launch-risk assessment.</div>
+
+  <h3>E.8 Fix-after-review</h3>
+  <div class="prompt">Based on the issues you found, fix the package. Preserve the learner-facing interaction. Only change packaging, manifest, runtime-state handling, or missing-file issues. Summarize what you changed, why, and what I should test first in Moodle.</div>
+
+  <h3>E.9 Web fork from existing SCORM</h3>
+  <div class="prompt">Create a separate browser-deployable web version from this SCORM package. Do not overwrite the SCORM version. Preserve the learner-facing interaction. Replace SCORM persistence with localStorage. Explain what changed at the runtime layer and what did not change at the interaction layer.</div>
+
+  <h3>E.10 Maintainability review</h3>
+  <div class="prompt">Review this learning object for maintainability: file organization, readability of interaction logic, ease of changing content later, ease of changing scoring or branching, friendliness to Git-based version control. Then suggest (1) biggest maintainability risk, (2) most useful refactor, (3) how this compares to a proprietary authoring-file workflow.</div>
+</section>
+
+<!-- Appendix F -->
+<section class="chapter appendix" id="appF">
+  <div class="chapter-header">
+    <div class="num">F</div>
+    <div>
+      <h2>Conversation patterns that work</h2>
+      <div class="tagline">How you conduct the conversation over time.</div>
+    </div>
+  </div>
+
+  <h3>F.1 One meaningful task per turn</h3>
+  <div class="compare">
+    <div class="col strong">
+      <h5>Good</h5>
+      <blockquote>"Build the first working version."</blockquote>
+      <blockquote>"Now fix the layout without changing the activity logic."</blockquote>
+      <blockquote>"Now package this for SCORM 1.2 and review the resume behavior."</blockquote>
+    </div>
+    <div class="col weak">
+      <h5>Less effective</h5>
+      <blockquote>"Build the activity, package it, compare it to Articulate, make it beautiful, and prepare research notes."</blockquote>
+    </div>
+  </div>
+
+  <h3>F.2 Always name what must stay stable</h3>
+  <div class="prompt">
+<span class="label">Change:</span>
+<ul><li>the layout</li></ul>
+<span class="label">Preserve:</span>
+<ul><li>the scoring logic</li><li>the question flow</li><li>the current tracking model</li></ul>
+  </div>
+
+  <h3>F.3 Ask for verification, not only implementation</h3>
+  <div class="prompt">Please inspect the package first and report risks before editing anything.</div>
+
+  <h3>F.4 Ask for findings in practical language</h3>
+  <div class="prompt">Explain your findings in plain language and tell me what I should test first.</div>
+
+  <h3>F.5 Separate design feedback from runtime feedback</h3>
+  <div class="compare">
+    <div class="col strong">
+      <h5>Design feedback</h5>
+      <blockquote>The instructions are unclear.</blockquote>
+      <blockquote>The interface is too busy.</blockquote>
+      <blockquote>The learner does not know what success looks like.</blockquote>
+    </div>
+    <div class="col strong">
+      <h5>Runtime feedback</h5>
+      <blockquote>suspend_data is not restoring correctly.</blockquote>
+      <blockquote>The manifest path is wrong.</blockquote>
+      <blockquote>The zip imports but does not launch.</blockquote>
+      <blockquote>Works on the web but not in Moodle.</blockquote>
+    </div>
+  </div>
+
+  <h3>F.6 A strong minimal dialogue pattern</h3>
+  <ol>
+    <li>Ask Codex to build.</li>
+    <li>Inspect in the browser or LMS.</li>
+    <li>Report concrete problems.</li>
+    <li>Ask Codex to preserve stable parts.</li>
+    <li>Ask Codex to verify before finalizing.</li>
+  </ol>
+
+  <div class="prompt">
+The activity works, but I need a stricter SCORM QA pass now. Please inspect the package for:
+<ul><li>manifest correctness</li><li>root-level zip structure</li><li>launch-file consistency</li><li>resume-state handling</li></ul>
+Do not edit yet. First report findings, risks, and what you would fix before Moodle upload.
+  </div>
+
+  <p class="marginal">That style of conversation tends to produce much better results than "Can you check if this is okay?"</p>
+</section>
+
+<footer class="colophon">
+  <div>
+    <h5>Edition</h5>
+    <div>No. 01 — April 17, 2026<br>Revised generic edition.</div>
+  </div>
+  <div>
+    <h5>Typography</h5>
+    <div>Source Serif 4 for reading.<br>Inter Tight for hierarchy.<br>JetBrains Mono for code.</div>
+  </div>
+  <div>
+    <h5>Scope</h5>
+    <div>Generic workflow document. Verify third-party pricing and LMS behavior at source before quoting institutionally.</div>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>
