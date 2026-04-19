@@ -731,25 +731,27 @@
     <li><span class="n">13</span><span class="t">How to Ask for SCORM Packaging</span><span class="p">§13</span></li>
     <li><span class="n">14</span><span class="t">How to Ask for a Separate Web Version</span><span class="p">§14</span></li>
     <li><span class="n">15</span><span class="t">Moodle Testing Workflow</span><span class="p">§15</span></li>
-    <li><span class="n">16</span><span class="t">Suggested File Organization</span><span class="p">§16</span></li>
-    <li><span class="n">17</span><span class="t">Preventing Chaos During Revision</span><span class="p">§17</span></li>
-    <li><span class="n">18</span><span class="t">Prompt Patterns by Content Family</span><span class="p">§18</span></li>
-    <li><span class="n">19</span><span class="t">Where Three.js Fits In</span><span class="p">§19</span></li>
-    <li><span class="n">20</span><span class="t">Specialized Track: Three.js</span><span class="p">§20</span></li>
-    <li><span class="n">21</span><span class="t">Accessibility &amp; Learning Usefulness</span><span class="p">§21</span></li>
-    <li><span class="n">22</span><span class="t">Versioning Strategy</span><span class="p">§22</span></li>
-    <li><span class="n">23</span><span class="t">A Reusable Master Prompt</span><span class="p">§23</span></li>
-    <li><span class="n">24</span><span class="t">A Full Example Collaboration</span><span class="p">§24</span></li>
-    <li><span class="n">25</span><span class="t">Troubleshooting Prompts</span><span class="p">§25</span></li>
-    <li><span class="n">26</span><span class="t">Final Quality Checklist</span><span class="p">§26</span></li>
-    <li><span class="n">27</span><span class="t">Final Advice</span><span class="p">§27</span></li>
-    <li><span class="n">28</span><span class="t">Short Summary of the Method</span><span class="p">§28</span></li>
+    <li><span class="n">16</span><span class="t">LTI Integration (Canvas-first Path)</span><span class="p">§16</span></li>
+    <li><span class="n">17</span><span class="t">Suggested File Organization</span><span class="p">§17</span></li>
+    <li><span class="n">18</span><span class="t">Preventing Chaos During Revision</span><span class="p">§18</span></li>
+    <li><span class="n">19</span><span class="t">Prompt Patterns by Content Family</span><span class="p">§19</span></li>
+    <li><span class="n">20</span><span class="t">Where Three.js Fits In</span><span class="p">§20</span></li>
+    <li><span class="n">21</span><span class="t">Specialized Track: Three.js</span><span class="p">§21</span></li>
+    <li><span class="n">22</span><span class="t">Accessibility (WCAG 2.1 AA)</span><span class="p">§22</span></li>
+    <li><span class="n">23</span><span class="t">Versioning Strategy</span><span class="p">§23</span></li>
+    <li><span class="n">24</span><span class="t">A Reusable Master Prompt</span><span class="p">§24</span></li>
+    <li><span class="n">25</span><span class="t">A Full Example Collaboration</span><span class="p">§25</span></li>
+    <li><span class="n">26</span><span class="t">Troubleshooting Prompts</span><span class="p">§26</span></li>
+    <li><span class="n">27</span><span class="t">Final Quality Checklist</span><span class="p">§27</span></li>
+    <li><span class="n">28</span><span class="t">Final Advice</span><span class="p">§28</span></li>
+    <li><span class="n">29</span><span class="t">Short Summary of the Method</span><span class="p">§29</span></li>
     <li class="appendix"><span class="n">A</span><span class="t">Complete Minimal Quiz Example</span><span class="p">app.</span></li>
     <li class="appendix"><span class="n">B</span><span class="t">Minimal scormdriver.js Example</span><span class="p">app.</span></li>
     <li class="appendix"><span class="n">C</span><span class="t">Minimal imsmanifest.xml Example</span><span class="p">app.</span></li>
     <li class="appendix"><span class="n">D</span><span class="t">Companion Files &amp; Cheat Sheet</span><span class="p">app.</span></li>
     <li class="appendix"><span class="n">E</span><span class="t">Operational Prompt Library</span><span class="p">app.</span></li>
     <li class="appendix"><span class="n">F</span><span class="t">Conversation Patterns That Work</span><span class="p">app.</span></li>
+    <li class="appendix"><span class="n">G</span><span class="t">Learning Theory, AI Ethics &amp; Assessment Rubric</span><span class="p">app.</span></li>
   </ol>
 </nav>
 
@@ -780,9 +782,20 @@
   <div class="pullquote-wide">This is not only a coding guide. It is a <em>collaboration guide</em>.</div>
 
   <h3>Primary audience and assumed skill level</h3>
-  <p>This tutorial is written primarily for instructional designers, learning designers, learning engineers, and technically curious educators who want to collaborate with Codex to build working digital learning objects. A secondary audience is front-end developers or educational software collaborators who need a clearer view of the instructional logic behind the build requests.</p>
+  <div class="callout">
+    <span class="label">Audience priority</span>
+    <p><strong>Primary:</strong> practicing instructional designers, learning designers, learning engineers, and technically curious educators who want to collaborate with Codex to build working digital learning objects. The document is operational first — it is written to be used, not only to be read. <strong>Secondary:</strong> graduate and upper-undergraduate instructional-design students using this document as a lab manual in a course. For that audience, the prompt schema (§5), the workflow (§6), and the delivery-target decision framework (§4) are the entry points; the appendices provide scaffolding for guided practice.</p>
+  </div>
+  <p>This tutorial is written primarily for practicing instructional designers, learning designers, learning engineers, and technically curious educators who want to collaborate with Codex to build working digital learning objects. A tertiary audience is front-end developers or educational software collaborators who need a clearer view of the instructional logic behind the build requests.</p>
   <p>That means the document is not written only for professional developers, but it is also not written as a zero-technical-literacy guide. It assumes the reader can work with files, understand the difference between a web version and a SCORM package, and review outputs in a browser or LMS. Where the workflow becomes more technical — such as SCORM packaging or runtime state handling — the document tries to explain the reason for each step rather than only naming it.</p>
-  <p>If the reader is a classroom instructor or subject-matter expert with little implementation experience, the document can still be useful, but that reader may need developer support for the packaging and testing stages. If the reader is an experienced developer, the instructional-design framing may be the more valuable part.</p>
+  <p>If the reader is a classroom instructor or subject-matter expert with little implementation experience, the document can still be useful, but that reader may need developer support for the packaging and testing stages. If the reader is an experienced developer, the instructional-design framing may be the more valuable part. If the reader is a student, the teaching sequence further down this section is the recommended on-ramp.</p>
+  <h3>Intended use context</h3>
+  <p>This document was written with two concrete contexts in mind, and its examples, defaults, and tone reflect both:</p>
+  <ul>
+    <li><strong>Professional practice</strong> — higher-education learning-design teams, centers for teaching and learning, research groups building learning artifacts for courses or studies, and individual instructional designers who need a reproducible Codex workflow.</li>
+    <li><strong>A graduate or upper-undergraduate course</strong> in a US instructional-design, learning-sciences, or educational-technology program — specifically, a course that covers interactive courseware production, LMS delivery, and iterative design-build cycles. The document is structured so that it can be decomposed into a five-module lab sequence (see the teaching sequence below) running roughly six to eight weeks of a standard semester.</li>
+  </ul>
+  <p>Two things follow from this scope. First, institutional defaults reflect US public-university realities: WCAG 2.1 AA (§23) is treated as a legal floor, not a preference; the §17 LTI integration path is framed as the default for Canvas-first programs. Second, non-course and non-higher-ed uses (K–12 compliance training, corporate LMS work, vendor-authoring workflows) are not the primary design target — much of the workflow still transfers, but terminology and defaults may need adjustment.</p>
 
   <h3>Minimum prerequisite concepts</h3>
   <p>Some readers, especially undergraduate instructional-design students, may encounter several terms in this document for the first time. If that is the case, it is better to pause here and establish a small conceptual foundation rather than pushing forward and losing the thread by Section 5. At minimum, a reader should understand:</p>
@@ -850,14 +863,14 @@
       <div class="label">Module<span class="num">IV</span></div>
       <div>
         <h4>Package and validate</h4>
-        <p>Sections 13, 14, 15, 16. SCORM, web forks, Moodle testing, and package structure.</p>
+        <p>Sections 13, 14, 15, 16, 17. SCORM, web forks, Moodle testing, LTI integration, and package structure.</p>
       </div>
     </div>
     <div class="stage">
       <div class="label">Module<span class="num">V</span></div>
       <div>
         <h4>Compare workflows and scale up</h4>
-        <p>Sections 17 onward plus the appendices. Maintainability, versioning, technology choices, and broader platform questions.</p>
+        <p>Sections 18 onward plus the appendices. Maintainability, versioning, technology choices, and broader platform questions.</p>
       </div>
     </div>
   </div>
@@ -1022,6 +1035,21 @@
         <li>testing both flows</li>
       </ul>
     </div>
+  </div>
+
+  <h3>SCORM vs. web decision framework</h3>
+  <p>Sections 9, 13, and 14 argue repeatedly that SCORM should not be the reflex default. This short table turns that argument into a decision rule you can apply before writing any prompt.</p>
+  <table>
+    <tr><th>If your situation is&hellip;</th><th>Recommended target</th><th>Why</th></tr>
+    <tr><td>LMS completion, score reporting, or resume tracking is required</td><td><strong>SCORM (1.2 or 2004)</strong></td><td>Only an LMS-aware wrapper returns <code>cmi.completion_status</code>, <code>cmi.score.raw</code>, and <code>cmi.suspend_data</code> reliably.</td></tr>
+    <tr><td>Direct hosting, custom backend, or your own analytics</td><td><strong>Web deployment</strong></td><td>SCORM's runtime is a liability when you control the backend; plain web lets you log richer events and iterate faster.</td></tr>
+    <tr><td>Research tool, public outreach, or open-access demo</td><td><strong>Web deployment</strong></td><td>Learners without LMS credentials should not need one to reach the artifact; shareable URLs beat zip uploads.</td></tr>
+    <tr><td>Richer xAPI-style event tracking or assignment-level launch semantics</td><td><strong>cmi5 or xAPI (not SCORM)</strong></td><td>SCORM's data model cannot express the events you need; see §13 for the transition path.</td></tr>
+    <tr><td>You are uncertain or the target may change later</td><td><strong>Web first, SCORM later</strong></td><td>Building a working web version first preserves optionality — SCORM packaging is a later wrapper step, not a blocking design choice.</td></tr>
+  </table>
+  <div class="callout">
+    <span class="label">Rule of thumb</span>
+    <p>Choose SCORM only when an LMS stakeholder has explicitly asked for tracking, completion, or grading inside their system. Otherwise, default to web deployment and package later if needed.</p>
   </div>
 
   <h3>A practical note on local Moodle as a sandbox</h3>
@@ -1615,7 +1643,7 @@ Create a separate web deployment version.<br><br>
   <table>
     <tr><th>Platform</th><th>Role</th><th>Main caution</th></tr>
     <tr><td><strong>Moodle 4.3+</strong></td><td>Primary reference; best first sandbox for local upload, debugging, and resume testing.</td><td>Do not assume Moodle behavior generalizes.</td></tr>
-    <tr><td><strong>Canvas</strong></td><td>Secondary validation when institutional deployment matters.</td><td>Launch flow, embedding, and grading should be re-tested.</td></tr>
+    <tr><td><strong>Canvas</strong></td><td>Secondary validation when institutional deployment matters.</td><td>Paid Canvas tiers include a built-in SCORM tool (1.2 and 2004), but SCORM 2004 multi-SCO sequencing and reporting are limited; Instructure typically recommends LTI integrations (e.g., SCORM Cloud) for complex SCORM 2004, xAPI, or cmi5 content. Launch flow, embedding, and grading should be re-tested rather than assumed.</td></tr>
     <tr><td><strong>Blackboard</strong></td><td>Secondary validation for enterprise compatibility.</td><td>Packaging may import but runtime details differ.</td></tr>
     <tr><td><strong>SCORM Cloud</strong></td><td>Neutral validation layer.</td><td>Not a replacement for the real destination LMS.</td></tr>
   </table>
@@ -1630,6 +1658,83 @@ Create a separate web deployment version.<br><br>
 <section class="chapter" id="s16">
   <div class="chapter-header">
     <div class="num">16</div>
+    <div>
+      <h2>LTI integration (Canvas-first path)</h2>
+      <div class="tagline">When SCORM is the wrong wrapper — what to build instead.</div>
+    </div>
+  </div>
+
+  <p>If your primary LMS is Canvas, Brightspace (D2L), or an institution that has standardized on modern launch protocols, SCORM is often not the best wrapper. The Learning Tools Interoperability (LTI) family of specifications — especially LTI 1.3 plus LTI Advantage — is the path most higher-education LMSs actively favor for non-trivial interactive content. This section explains when LTI is the right default, what it gives you that SCORM does not, and how to ask Codex to build an LTI-launched tool.</p>
+
+  <h3>What LTI is (and is not)</h3>
+  <p>LTI is a launch-and-messaging specification, not a packaging format. Where SCORM wraps learning content into a zip that the LMS serves locally, LTI lets an LMS launch an externally hosted tool, pass signed identity and context claims, and (with LTI Advantage) exchange grades, roster information, and deep-linked resource choices. The tool runs on your own infrastructure; the LMS becomes the launcher, not the host.</p>
+
+  <table>
+    <tr><th>Aspect</th><th>SCORM</th><th>LTI 1.3 + Advantage</th></tr>
+    <tr><td>Where the content lives</td><td>Inside the LMS (uploaded zip)</td><td>On your own server, launched by the LMS</td></tr>
+    <tr><td>Identity / launch</td><td>Implicit; no user identity passed by the spec</td><td>Signed JWT with user, context, roles, return URL</td></tr>
+    <tr><td>Grade return</td><td>CMI data model (score, completion, suspend_data)</td><td>Assignment and Grade Services (AGS) REST API</td></tr>
+    <tr><td>Roster access</td><td>Not available</td><td>Names and Role Provisioning Services (NRPS)</td></tr>
+    <tr><td>Content selection</td><td>One zip, one launch point</td><td>Deep Linking 2.0 — instructor picks resources at placement time</td></tr>
+    <tr><td>Update cadence</td><td>Re-upload zip per LMS course</td><td>Deploy to your server; all courses see the update</td></tr>
+    <tr><td>Canvas support</td><td>Built-in SCORM tool (1.2 and 2004); 2004 sequencing limited</td><td>First-class; configured via Developer Keys (LTI 1.3)</td></tr>
+  </table>
+
+  <h3>When LTI is the better default</h3>
+  <p>Choose LTI over SCORM when any of the following is true:</p>
+  <ul>
+    <li>the primary LMS is Canvas, Brightspace, or Blackboard Ultra, and the content is more than a simple quiz or explainer</li>
+    <li>you need richer event data than SCORM's CMI model can express — branching analytics, per-question timing, open-text responses</li>
+    <li>the content will be updated often (server-side deploys beat re-uploading zips to every course shell)</li>
+    <li>you need roster awareness — group assignments, cohort-level behavior, instructor-vs-student views</li>
+    <li>you want the instructor to choose <em>which</em> learning object to embed from a library at placement time (Deep Linking)</li>
+    <li>you need single sign-on with identity you can actually verify</li>
+  </ul>
+
+  <p>Stay with SCORM when: you need portability across LMSs without running a server, your institution will not whitelist your hostname, the content is a one-shot module with simple completion/score, or offline playback matters.</p>
+
+  <div class="callout">
+    <span class="label">Practical rule for Canvas-first programs</span>
+    <p>If your program's primary LMS is Canvas and the learning object does anything richer than a short quiz, default to LTI 1.3. SCORM remains a valid fallback for portability, but it should be the compromise choice, not the reflex one.</p>
+  </div>
+
+  <h3>Minimum viable LTI 1.3 tool</h3>
+  <p>An LTI 1.3 tool is, at its smallest, a web application that:</p>
+  <ol>
+    <li>exposes a <strong>public JWKS endpoint</strong> advertising your tool's public keys</li>
+    <li>accepts an <strong>OIDC login initiation</strong> POST from the LMS</li>
+    <li>validates the <strong>signed launch JWT</strong> (audience, issuer, nonce, signature against the LMS's JWKS)</li>
+    <li>renders the learning experience, scoped to the launch's user and context</li>
+    <li>optionally calls back to <strong>AGS</strong> to post a score, or <strong>NRPS</strong> to fetch the roster</li>
+  </ol>
+
+  <p>Well-maintained server libraries exist in most ecosystems — for example, <code>ltijs</code> (Node.js), <code>PyLTI1p3</code> (Python), and the <code>IMSGlobal/lti-1-3-php-library</code> (PHP). Prefer a library over hand-rolling JWT validation; the security surface is non-trivial.</p>
+
+  <h3>Prompting Codex for an LTI-launched tool</h3>
+  <div class="prompt">Build a minimal LTI 1.3 tool using <em>[library of choice]</em>. The tool should: expose /jwks, /login, and /launch endpoints; validate the incoming OIDC-launched JWT against the platform's JWKS; render the learning interaction scoped to the launched user and context_id; and post a score back via Assignment and Grade Services when the learner completes the activity. Include a README that lists exactly which platform registration fields (client_id, deployment_id, auth URL, token URL, JWKS URL) must be configured on the LMS side. Do not embed LMS keys inline — read them from environment variables.</div>
+
+  <h3>Testing LTI locally</h3>
+  <p>Two tools make LTI development tractable without waiting for an institutional Canvas instance:</p>
+  <ul>
+    <li><strong>IMS Global LTI Reference Implementation</strong> (<em>https://lti-ri.imsglobal.org</em>) — a free platform-side test harness for LTI 1.3 launches, Deep Linking, AGS, and NRPS.</li>
+    <li><strong>Canvas free-for-teacher</strong> or an institutional <strong>Canvas test environment</strong> — both let you register a Developer Key and install your tool via a full LTI 1.3 flow.</li>
+  </ul>
+
+  <p>A realistic test pass includes: OIDC login, JWT validation with correct and intentionally-bad signatures, score round-trip via AGS, roster fetch via NRPS, Deep Linking selection, and launch from a non-instructor role to verify role-scoped behavior.</p>
+
+  <div class="callout warn">
+    <span class="label">Security reminder</span>
+    <p>LTI 1.3 is OAuth 2.0–based and carries real identity. Treat the private key that signs your tool's assertions like any production secret: rotate it, keep it out of source control, and log nothing that includes the launch JWT in full.</p>
+  </div>
+
+  <h3>What this means for the rest of the tutorial</h3>
+  <p>The SCORM guidance in §§13–15 is not wrong — it is one valid delivery path. Read those sections as "how to do it when the LMS asks for a zip." Read this section as "how to do it when the LMS asks for a launchable tool." Most Canvas-first programs will spend more time in this section than in the SCORM chain; most Moodle-first programs will spend more time in the SCORM chain. The prompt schema of §5, the workflow of §6, and the accessibility checklist of §22 apply to both paths unchanged.</p>
+</section>
+
+<!-- §17 -->
+<section class="chapter" id="s17">
+  <div class="chapter-header">
+    <div class="num">17</div>
     <div>
       <h2>Suggested file organization</h2>
       <div class="tagline">Project layout vs. package-internal structure.</div>
@@ -1666,10 +1771,10 @@ Create a separate web deployment version.<br><br>
   </div>
 </section>
 
-<!-- §17 -->
-<section class="chapter" id="s17">
+<!-- §18 -->
+<section class="chapter" id="s18">
   <div class="chapter-header">
-    <div class="num">17</div>
+    <div class="num">18</div>
     <div>
       <h2>How to prevent chaos during revision</h2>
       <div class="tagline">Always name what must stay stable.</div>
@@ -1690,39 +1795,39 @@ Only change spacing, hierarchy, and panel structure.
   <p>This habit is particularly important once the project has more than one version or delivery target. Without explicit scope control, a revision aimed at tone or layout can accidentally alter state management, pacing, or packaging assumptions.</p>
 </section>
 
-<!-- §18 -->
-<section class="chapter" id="s18">
+<!-- §19 -->
+<section class="chapter" id="s19">
   <div class="chapter-header">
-    <div class="num">18</div>
+    <div class="num">19</div>
     <div>
       <h2>Prompt patterns by content family</h2>
       <div class="tagline">Six reusable patterns.</div>
     </div>
   </div>
 
-  <h3>18.1 Interactive explainer</h3>
+  <h3>19.1 Interactive explainer</h3>
   <div class="prompt">Create an interactive explainer. Section-based progression, small interactive reveals, short guided explanations, summary at the end. Lightweight comprehension checks as needed. Track current section and restore on resume. Plain HTML/CSS/JS; prioritize concision and clarity.</div>
 
-  <h3>18.2 Practice quiz</h3>
+  <h3>19.2 Practice quiz</h3>
   <div class="prompt">Create a practice quiz object. 10 items, one at a time, submit-and-feedback, retry after finishing. Immediate explanatory feedback, final score. Track score and current item; restore on resume. Keep code easy to package for SCORM later.</div>
 
-  <h3>18.3 Branching scenario</h3>
+  <h3>19.3 Branching scenario</h3>
   <div class="prompt">Create a branching decision scenario. Short setup, 3 choices per step, visible consequences, 4–6 total decision points. Immediate consequence feedback, reflective summary. Track current decision point and chosen path; restore on resume.</div>
 
-  <h3>18.4 Simulation</h3>
+  <h3>19.4 Simulation</h3>
   <div class="prompt">Create an interactive learning simulation. Adjustable controls, clear indicators, immediate visual response, guided challenges. Track current parameters and challenge completion; restore state on resume. Favor clarity over spectacle.</div>
 
-  <h3>18.5 Mini-game</h3>
+  <h3>19.5 Mini-game</h3>
   <div class="prompt">Create a mini-game for learning practice. Quick rounds, visible score, simple progression, replayability. Immediate gameplay feedback, end-of-round score and replay option. Keep it lightweight. Prioritize a stable loop and scoring.</div>
 
-  <h3>18.6 Data visualization</h3>
+  <h3>19.6 Data visualization</h3>
   <div class="prompt">Create an interactive learning-oriented data visualization. Meaningful filtering, rich tooltips, clear narrative structure, support for comparison. Track selection, filters, active view; restore on resume. The visualization should teach, not impress.</div>
 </section>
 
-<!-- §19 -->
-<section class="chapter" id="s19">
+<!-- §20 -->
+<section class="chapter" id="s20">
   <div class="chapter-header">
-    <div class="num">19</div>
+    <div class="num">20</div>
     <div>
       <h2>Where Three.js fits in</h2>
       <div class="tagline">One possible tool, not the main point.</div>
@@ -1756,10 +1861,10 @@ Only change spacing, hierarchy, and panel structure.
   <div class="pullquote">Three.js is an example specialization, not the tutorial's center of gravity.</div>
 </section>
 
-<!-- §20 -->
-<section class="chapter" id="s20">
+<!-- §21 -->
+<section class="chapter" id="s21">
   <div class="chapter-header">
-    <div class="num">20</div>
+    <div class="num">21</div>
     <div>
       <h2>Specialized track: Three.js as one case</h2>
       <div class="tagline">The same generic workflow still applies.</div>
@@ -1776,26 +1881,68 @@ Only change spacing, hierarchy, and panel structure.
   </ol>
 </section>
 
-<!-- §21 -->
-<section class="chapter" id="s21">
+<!-- §22 -->
+<section class="chapter" id="s22">
   <div class="chapter-header">
-    <div class="num">21</div>
+    <div class="num">22</div>
     <div>
-      <h2>Accessibility and learning usefulness</h2>
-      <div class="tagline">Ask explicitly.</div>
+      <h2>Accessibility (WCAG 2.1 AA)</h2>
+      <div class="tagline">A legal floor for public institutions, a professional baseline for instructional designers.</div>
     </div>
   </div>
 
-  <div class="prompt">Make the interface accessible and readable. Use clear contrast, visible focus states, understandable labels, and learner-friendly language. Keep the interaction cognitively manageable. Avoid overly decorative effects. Make feedback instructionally meaningful, not just correct/incorrect.</div>
+  <p>For US public universities, WCAG 2.1 Level AA conformance is not a stylistic preference — it is a legal obligation under Section 504 and the ADA, and it is increasingly a procurement requirement for courseware. For instructional designers, it is also a core professional competency. Treat this section as a pre-release checklist, not a "nice to have."</p>
+
+  <p>The default target in this tutorial is <strong>WCAG 2.1 AA</strong>. WCAG 2.2 became a W3C Recommendation in October 2023 and carries all 2.1 criteria forward plus nine additional AA items; projects with room for it should target 2.2 AA as a forward-looking baseline. Either way, do not ask Codex to "make it accessible" and stop there. Ask against specific criteria, and verify by testing.</p>
+
+  <h3>Core accessibility prompt</h3>
+  <div class="prompt">Make this learning object conform to WCAG 2.1 Level AA. Specifically: every interactive control must be keyboard-operable with a visible focus indicator; text contrast must be at least 4.5:1 (3:1 for large text) and UI/graphical contrast at least 3:1; every non-text element needs a text alternative; every video needs captions and, where feasible, an audio description or transcript; every form control and custom widget needs an accessible name and role via native semantics or ARIA. Do not change the instructional logic. When a tradeoff is required, explain it rather than silently degrading the interaction.</div>
+
+  <h3>Pre-release checklist</h3>
+  <p>The numbers in parentheses are the WCAG 2.1 success criteria you should be able to point to for each item. Authoritative reference: <em>https://www.w3.org/TR/WCAG21/</em> and the Quick Reference at <em>https://www.w3.org/WAI/WCAG21/quickref/</em>.</p>
+
+  <table>
+    <tr><th>Area</th><th>Check</th><th>Criterion</th></tr>
+    <tr><td rowspan="2"><strong>Perceivable</strong></td><td>Every image, icon, chart, and non-decorative visual has a meaningful <code>alt</code> or ARIA label; purely decorative visuals are marked <code>alt=""</code> or <code>aria-hidden="true"</code>.</td><td>1.1.1 (A)</td></tr>
+    <tr><td>Semantic structure is conveyed programmatically — headings nest correctly, lists are real lists, landmarks (<code>main</code>, <code>nav</code>, <code>complementary</code>) are used.</td><td>1.3.1 (A)</td></tr>
+    <tr><td rowspan="3"><strong>Media</strong></td><td>Every pre-recorded video has synchronized captions.</td><td>1.2.2 (A)</td></tr>
+    <tr><td>Every pre-recorded video has an audio description track, or a text transcript that includes the visual information.</td><td>1.2.5 (AA)</td></tr>
+    <tr><td>No content flashes more than three times per second.</td><td>2.3.1 (A)</td></tr>
+    <tr><td rowspan="2"><strong>Color and contrast</strong></td><td>Body text contrast ratio ≥ 4.5:1; large text (≥ 18pt, or ≥ 14pt bold) ≥ 3:1.</td><td>1.4.3 (AA)</td></tr>
+    <tr><td>UI components (buttons, inputs, focus rings) and meaningful graphical elements have ≥ 3:1 contrast against adjacent colors.</td><td>1.4.11 (AA)</td></tr>
+    <tr><td rowspan="3"><strong>Keyboard</strong></td><td>Every interactive control is reachable and operable using the keyboard alone.</td><td>2.1.1 (A)</td></tr>
+    <tr><td>No keyboard trap — the user can always leave any component they entered.</td><td>2.1.2 (A)</td></tr>
+    <tr><td>The currently focused element is visually distinguishable (custom focus ring if the default is suppressed).</td><td>2.4.7 (AA)</td></tr>
+    <tr><td rowspan="2"><strong>Navigation</strong></td><td>A "skip to main content" link or equivalent bypass is available.</td><td>2.4.1 (A)</td></tr>
+    <tr><td>Tab order follows a logical reading sequence; interactive order matches visual order.</td><td>2.4.3 (A)</td></tr>
+    <tr><td rowspan="2"><strong>Forms and widgets</strong></td><td>Every form control has a programmatic label; errors are announced in text, not color alone, and suggestions are provided where possible.</td><td>3.3.1, 3.3.2, 3.3.3 (A / AA)</td></tr>
+    <tr><td>Every custom widget exposes an accessible name, role, and state — via native HTML where possible, ARIA where not.</td><td>4.1.2 (A)</td></tr>
+    <tr><td rowspan="2"><strong>Responsive / zoom</strong></td><td>Content is usable at 200% zoom without horizontal scrolling at 320 CSS pixels of width.</td><td>1.4.10 (AA)</td></tr>
+    <tr><td>Text can be resized up to 200% without loss of content or functionality.</td><td>1.4.4 (AA)</td></tr>
+  </table>
+
+  <h3>How to verify, not just claim</h3>
+  <p>A checklist is only useful if it is actually tested. Before shipping a SCORM or web build, perform at least these four passes:</p>
+  <ol>
+    <li><strong>Keyboard pass:</strong> unplug the mouse and complete the full learner task. Note every control you cannot reach, activate, or exit.</li>
+    <li><strong>Screen-reader pass:</strong> run through the activity with NVDA (Windows, free), VoiceOver (macOS), or Orca (Linux). Confirm that every control announces a name, role, and current state.</li>
+    <li><strong>Contrast pass:</strong> check key foreground/background pairs with a tool such as the WebAIM contrast checker or the Chrome/Firefox devtools contrast panel.</li>
+    <li><strong>Automated pass:</strong> run axe DevTools or Lighthouse on the rendered page. Automated tools catch roughly 30–40% of issues — useful as a floor, not a ceiling.</li>
+  </ol>
+
+  <div class="callout">
+    <span class="label">Institutional reminder</span>
+    <p>If you are building for a US public university, document the conformance level you targeted, the criteria you tested, and any known exceptions. "We intended to be accessible" is not a defensible record. A short accessibility statement per learning object is far stronger.</p>
+  </div>
 
   <h3>Privacy and data-leak awareness</h3>
   <p>SCORM packages are still web apps and carry ordinary web risks. If your project becomes more production-oriented, review the package for: unexpected external requests, hidden analytics calls, hardcoded secrets, learner identifiers embedded in state, and unsafe use of query strings or stored data.</p>
 </section>
 
-<!-- §22 -->
-<section class="chapter" id="s22">
+<!-- §23 -->
+<section class="chapter" id="s23">
   <div class="chapter-header">
-    <div class="num">22</div>
+    <div class="num">23</div>
     <div>
       <h2>Versioning strategy</h2>
       <div class="tagline">Do not destroy the working version just to make the next experiment.</div>
@@ -1806,10 +1953,10 @@ Only change spacing, hierarchy, and panel structure.
   <div class="pullquote">Preserve stable versions as soon as they work and treat later modifications as forks rather than overwrites.</div>
 </section>
 
-<!-- §23 -->
-<section class="chapter" id="s23">
+<!-- §24 -->
+<section class="chapter" id="s24">
   <div class="chapter-header">
-    <div class="num">23</div>
+    <div class="num">24</div>
     <div>
       <h2>A reusable master prompt</h2>
       <div class="tagline">The same schema, every project.</div>
@@ -1837,10 +1984,10 @@ Create an interactive e-learning object.<br><br>
   </div>
 </section>
 
-<!-- §24 -->
-<section class="chapter" id="s24">
+<!-- §25 -->
+<section class="chapter" id="s25">
   <div class="chapter-header">
-    <div class="num">24</div>
+    <div class="num">25</div>
     <div>
       <h2>A full example collaboration</h2>
       <div class="tagline">Six steps from first build to web fork.</div>
@@ -1875,10 +2022,10 @@ Create an interactive e-learning object.<br><br>
   </div>
 </section>
 
-<!-- §25 -->
-<section class="chapter" id="s25">
+<!-- §26 -->
+<section class="chapter" id="s26">
   <div class="chapter-header">
-    <div class="num">25</div>
+    <div class="num">26</div>
     <div>
       <h2>Troubleshooting prompts</h2>
       <div class="tagline">Five pointed recovery prompts.</div>
@@ -1901,10 +2048,10 @@ Create an interactive e-learning object.<br><br>
   <div class="prompt">Create a separate web deployment version. Do not overwrite the SCORM package. Use localStorage in the web version while preserving user-facing behavior.</div>
 </section>
 
-<!-- §26 -->
-<section class="chapter" id="s26">
+<!-- §27 -->
+<section class="chapter" id="s27">
   <div class="chapter-header">
-    <div class="num">26</div>
+    <div class="num">27</div>
     <div>
       <h2>Final quality checklist</h2>
       <div class="tagline">Four review dimensions before you call it done.</div>
@@ -1953,10 +2100,10 @@ Create an interactive e-learning object.<br><br>
   </div>
 </section>
 
-<!-- §27 -->
-<section class="chapter" id="s27">
+<!-- §28 -->
+<section class="chapter" id="s28">
   <div class="chapter-header">
-    <div class="num">27</div>
+    <div class="num">28</div>
     <div>
       <h2>Final advice</h2>
       <div class="tagline">Preserve design logic across stages.</div>
@@ -1968,10 +2115,10 @@ Create an interactive e-learning object.<br><br>
   <p>Good collaboration is not mainly about wording clever prompts. It is about <em>preserving design logic across stages</em>. The more faithfully you carry the learning goal, audience, interaction model, feedback model, and deployment assumptions from concept to prompt to revision to packaging, the more coherent the final result becomes. Those are the habits that turn code generation into courseware development.</p>
 </section>
 
-<!-- §28 -->
-<section class="chapter" id="s28">
+<!-- §29 -->
+<section class="chapter" id="s29">
   <div class="chapter-header">
-    <div class="num">28</div>
+    <div class="num">29</div>
     <div>
       <h2>Short summary of the method</h2>
       <div class="tagline">Nine lines.</div>
@@ -2353,6 +2500,97 @@ Do not edit yet. First report findings, risks, and what you would fix before Moo
   </div>
 
   <p class="marginal">That style of conversation tends to produce much better results than "Can you check if this is okay?"</p>
+</section>
+
+<!-- Appendix G -->
+<section class="chapter appendix" id="appG">
+  <div class="chapter-header">
+    <div class="num">G</div>
+    <div>
+      <h2>Learning theory, AI ethics &amp; assessment rubric</h2>
+      <div class="tagline">Supplementary readings and an evaluation scaffold — optional for the main workflow, useful in a course context.</div>
+    </div>
+  </div>
+
+  <p>The body of this tutorial is deliberately a tool-workflow document. It does not attempt to be a textbook on learning theory, and it does not attempt to settle the open ethical questions around AI-authored learning content. This appendix collects the readings an instructor is likely to want alongside the tutorial, plus a point-scored rubric that a course using this document as a lab manual can adapt for grading.</p>
+
+  <h3>G.1 Learning theory — companion readings</h3>
+  <p>These are stable, widely cited references that pair well with the design decisions discussed in §§2–12. They are not endorsements of any single framework; the goal is to give students vocabulary for design choices they are already making.</p>
+  <ul>
+    <li><strong>Cognitive Load Theory</strong> — Sweller, J., van Merriënboer, J.J.G., &amp; Paas, F. (2019). "Cognitive Architecture and Instructional Design: 20 Years Later." <em>Educational Psychology Review</em>, 31, 261–292. Useful when justifying the §22 guidance to keep interactions cognitively manageable.</li>
+    <li><strong>Multimedia Learning Principles</strong> — Mayer, R.E. (2020). <em>Multimedia Learning</em> (3rd ed.). Cambridge University Press. Ties directly to §10 (review for learning quality) and §19 (content-family prompt patterns).</li>
+    <li><strong>Backward Design</strong> — Wiggins, G. &amp; McTighe, J. (2005). <em>Understanding by Design</em> (expanded 2nd ed.). ASCD. Useful framing for §5.1–5.2 (learning goal, audience).</li>
+    <li><strong>Universal Design for Learning</strong> — CAST (2018). <em>Universal Design for Learning Guidelines, version 2.2</em>. <em>https://udlguidelines.cast.org</em>. Extends §22 accessibility beyond compliance into variability-aware design.</li>
+    <li><strong>Formative Assessment</strong> — Black, P. &amp; Wiliam, D. (2009). "Developing the theory of formative assessment." <em>Educational Assessment, Evaluation and Accountability</em>, 21, 5–31. Useful for §5.5 (feedback behavior) and §10.1 (review for learning quality).</li>
+    <li><strong>Four-Component Instructional Design (4C/ID)</strong> — van Merriënboer, J.J.G. &amp; Kirschner, P.A. (2018). <em>Ten Steps to Complex Learning</em> (3rd ed.). Useful when the learning object is a simulation or branching scenario (§§8.2–8.3).</li>
+  </ul>
+
+  <h3>G.2 AI ethics in instructional design — companion readings</h3>
+  <p>Code-authored learning objects raise a distinct set of ethical questions that the main workflow mentions only briefly. These readings are the current minimum an instructional-design program should expect students to engage with.</p>
+  <ul>
+    <li><strong>UNESCO (2023).</strong> <em>Guidance for generative AI in education and research</em>. <em>https://unesdoc.unesco.org/ark:/48223/pf0000386693</em>. The most widely cited policy-level framing.</li>
+    <li><strong>U.S. Department of Education, Office of Educational Technology (2023).</strong> <em>Artificial Intelligence and the Future of Teaching and Learning</em>. <em>https://www2.ed.gov/documents/ai-report/ai-report.pdf</em>. Specifically relevant for US public institutions.</li>
+    <li><strong>Selwyn, N. (2022).</strong> "The future of AI and education: Some cautionary notes." <em>European Journal of Education</em>, 57(4). A counterweight to uncritical adoption framings.</li>
+    <li><strong>Bender, E.M., Gebru, T., McMillan-Major, A., &amp; Shmitchell, S. (2021).</strong> "On the Dangers of Stochastic Parrots." <em>FAccT '21</em>. Foundational reading on bias, cost, and provenance in large language models.</li>
+    <li><strong>IEEE (2019, updated).</strong> <em>Ethically Aligned Design</em>, First Edition. <em>https://standards.ieee.org/industry-connections/ec/autonomous-systems/</em>. Useful for technical-ethics framing.</li>
+    <li><strong>Institutional policy</strong> — students should locate and read their own institution's AI acceptable-use policy, academic-integrity policy, and accessibility policy before publishing any Codex-authored object.</li>
+  </ul>
+
+  <p>Discussion prompts that pair well with these readings — suitable for a seminar or lab debrief:</p>
+  <ul>
+    <li>Where in <em>your</em> Codex workflow does authorship become ambiguous, and how would you disclose it to a learner?</li>
+    <li>Which parts of your learning object's behavior are you comfortable <em>not</em> being able to explain?</li>
+    <li>If a student asks where the content came from, what is the honest answer?</li>
+    <li>What data about the learner does your object collect, and who sees it?</li>
+  </ul>
+
+  <h3>G.3 Assessment rubric (adaptable)</h3>
+  <p>§27 provides a <em>pass/flag</em> quality checklist appropriate for a shipping decision. The rubric below is a <em>scored</em> version appropriate for grading student work when this document is used as a course lab manual. It is deliberately coarse — four dimensions, four levels, one integer per dimension — so that it is usable in a 50-minute review without becoming a compliance exercise. Instructors should adapt weights to course emphasis.</p>
+
+  <table>
+    <tr>
+      <th>Dimension</th>
+      <th>1 — Emerging</th>
+      <th>2 — Developing</th>
+      <th>3 — Proficient</th>
+      <th>4 — Exemplary</th>
+    </tr>
+    <tr>
+      <td><strong>Instructional design</strong><br><span class="marginal">Ties to §§5, 10.1, 11</span></td>
+      <td>Learning goal unclear or absent; feedback is only correct/incorrect.</td>
+      <td>Learning goal stated but not operationalized; feedback is generic.</td>
+      <td>Clear goal, audience, and interaction model; feedback is instructionally meaningful.</td>
+      <td>Goal, audience, and interactions are explicit and aligned; feedback produces observable learning moves.</td>
+    </tr>
+    <tr>
+      <td><strong>Interaction &amp; technical quality</strong><br><span class="marginal">Ties to §§6, 10.2–10.4, 15</span></td>
+      <td>Core interaction breaks or is confusing; LMS/web delivery untested.</td>
+      <td>Interaction works on a happy path; edge cases and resume behavior inconsistent.</td>
+      <td>Interaction is robust; SCORM/web target tested end-to-end with known-good resume/persistence behavior.</td>
+      <td>Tested across at least two environments (e.g., Moodle + SCORM Cloud, or Moodle + web); failure modes documented.</td>
+    </tr>
+    <tr>
+      <td><strong>Accessibility (§22)</strong><br><span class="marginal">WCAG 2.1 AA baseline</span></td>
+      <td>No accessibility considerations demonstrated; obvious failures (missing alt text, unreachable controls).</td>
+      <td>Some criteria addressed (e.g., contrast) but keyboard or screen-reader passes were not performed.</td>
+      <td>All §22 checklist items addressed; keyboard + screen-reader + automated passes performed; known exceptions documented.</td>
+      <td>Meets 2.1 AA and addresses relevant 2.2 AA additions; accessibility statement accompanies the object.</td>
+    </tr>
+    <tr>
+      <td><strong>Process &amp; maintainability</strong><br><span class="marginal">Ties to §§18, 23, Appendix F</span></td>
+      <td>Ad hoc edits; no versioning; no record of prompt history.</td>
+      <td>Some version control; prompts not reproducible.</td>
+      <td>Git-tracked; stable versions preserved; prompt history legible; one-task-per-turn discipline mostly followed.</td>
+      <td>Clean version history, reviewable diffs, documented prompt schema, and a short postmortem on what changed and why.</td>
+    </tr>
+  </table>
+
+  <p>A suggested weighting for a capstone or portfolio submission: Instructional design 30%, Interaction &amp; technical quality 25%, Accessibility 25%, Process &amp; maintainability 20%. Instructors emphasizing empirical comparison with Articulate-style tools may wish to add a fifth dimension on <em>comparative evaluation</em>, drawing on the §4 maintainability test protocol.</p>
+
+  <div class="callout">
+    <span class="label">Scope reminder</span>
+    <p>This appendix is supplementary. The tutorial body remains a tool-workflow document. If your course or team wants to treat learning theory, ethics, or assessment as primary content, those deserve their own syllabus — not a subsection.</p>
+  </div>
 </section>
 
 <footer class="colophon">
