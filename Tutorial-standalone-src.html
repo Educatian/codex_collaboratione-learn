@@ -908,6 +908,19 @@
   </ol>
 
   <p>This process is much more reliable than trying to get a perfect final artifact in one shot.</p>
+
+  <h3>2.1 AI authoring ethics and disclosure</h3>
+  <p>Treating Codex as a build partner only works if the partnership is visible. An AI-assisted learning object is not a neutral artifact: learners, instructors, and institutions have legitimate questions about who wrote what, what was verified, and what data the tool saw. Address those questions before shipping, not after.</p>
+  <div class="callout warn">
+    <span class="label">Minimum disclosure</span>
+    <ul>
+      <li>State in the learner-facing UI or the course syllabus that the object was built with AI assistance, and note the human role (design, review, packaging).</li>
+      <li>Keep a short record of which prompts shaped which components, so later maintainers can see the provenance of the interaction logic.</li>
+      <li>Do not paste identifiable learner data, proprietary institutional material, or unreleased assessment items into prompts. Treat Codex conversations like any other third-party service that may log input.</li>
+      <li>Follow your institution's policy on AI-generated course materials. If there is no policy yet, write one for your own team and circulate it upward.</li>
+    </ul>
+  </div>
+  <p>Academic integrity also runs in the other direction. If the object is used for assessment, the rubric should distinguish between "use AI as a study partner" and "submit AI output as your own analysis." This is a design question, not a disclaimer question — build the activity so that the honest path is the easy path.</p>
 </section>
 
 <!-- ============ §3 ============ -->
@@ -989,6 +1002,11 @@
       </ul>
       <div class="good">Good if the main goal is engagement plus repeated practice.</div>
     </div>
+  </div>
+
+  <div class="callout">
+    <span class="label">Design for return visits, not single sittings</span>
+    <p>For families B (practice), C (branching), and F (mini-game) in particular, durable learning depends on <em>spaced retrieval</em> — learners benefit more from returning to the activity across days than from one long session. This is a design request, not a magic property of the tool. When you prompt Codex, specify: state that survives a closed tab; entry points that let the learner resume mid-practice; and a visible cue that some items are due for review again. A quiz object that treats every session as a fresh start is quietly discarding the effect most responsible for retention.</p>
   </div>
 </section>
 
@@ -1119,6 +1137,16 @@
 
   <p>By contrast, an AI-assisted code-authored workflow usually shifts cost into a different structure: model or API usage where applicable, staff time, hosting or deployment, and training and maintenance overhead. This does not mean the code-authored route is always cheaper. In some settings, staff time may outweigh license savings. But the cost model is different, and often more flexible.</p>
 
+  <h3>AI model and workflow risk</h3>
+  <p>Cost is not the only structural difference. A code-authored workflow that depends on Codex also inherits the reliability profile of whichever AI provider sits behind it. Pricing changes, model deprecations, output-quality shifts between model versions, and API outages all turn into production risks for your content pipeline if you plan naively. Traditional authoring tools carry their own version-lock risks, but the failure modes are different.</p>
+  <p>Concrete mitigations worth building in from day one:</p>
+  <ul>
+    <li><strong>Document the prompts, not just the output.</strong> Store the master schema and project-level prompts in the repository alongside the code; they are the recipe for rebuilding if the current model version drifts or disappears.</li>
+    <li><strong>Pin model and library versions</strong> in any automation. "Use Codex" is not a reproducible build instruction; "Use Codex with this prompt against this model family, produce plain HTML/CSS/JS with no runtime dependency on the provider" is.</li>
+    <li><strong>Keep outputs provider-independent.</strong> The final learning object should not call the model at runtime for a standard SCORM or web build. If it does (e.g., live tutoring), treat the provider as a production dependency with SLAs, not an authoring convenience.</li>
+    <li><strong>Have a manual-fallback plan</strong> for small maintenance edits — tone tweaks, copy fixes, rubric changes. If the only way to update a typo is a round-trip through the model, the content is fragile.</li>
+  </ul>
+
   <h3>What this document still does not prove</h3>
   <p>It is equally important to say what this document does <em>not</em> yet establish. The tutorial does not yet provide:</p>
   <ul>
@@ -1163,6 +1191,7 @@
     <li>Identify misleading data displays</li>
   </ul>
   <p>The learning goal should be written as a learner outcome, not as a production description. <em>"Build a cool simulation"</em> is not a learning goal. <em>"Help learners understand how variable changes alter system behavior"</em> is.</p>
+  <p>Write the goal so that <strong>transfer</strong> is visible: name the context in which the learner should later use what they practice. "Compare country-level educational performance patterns <em>to inform a policy brief</em>" is stronger than the same sentence without the final clause, because it tells Codex (and you) which interactions are load-bearing and which are decoration. If you cannot describe where the skill will be reused, the activity is at risk of being inert.</p>
 
   <h3>5.2 Audience</h3>
   <p>Who is the learner? Examples: middle school students, undergraduates, graduate students, K–12 teachers, healthcare trainees, public-facing adult learners. The same interaction can feel appropriate or completely wrong depending on audience. If you omit it, Codex tends to default toward a generic professional-user tone, which may not fit classroom, outreach, or novice-training contexts.</p>
@@ -1175,6 +1204,7 @@
 
   <h3>5.5 Feedback or assessment behavior</h3>
   <p>How will the learning object respond? Many e-learning builds become instructionally thin because they stop at interactivity and never specify response behavior. A good learning object does not merely wait for input — it reacts in a way that supports learning. That reaction could be corrective, explanatory, reflective, comparative, cumulative, or state-based.</p>
+  <p>State whether feedback is <strong>formative</strong> (designed to shape the next attempt — hints, explanatory responses, retry, worked examples) or <strong>summative</strong> (designed to measure achievement — final score, one attempt, no mid-activity guidance), and prompt Codex accordingly. "Allow retry with explanatory feedback, do not record a graded score" is a formative spec. "Single attempt, submit-and-lock, record final score to the LMS" is a summative spec. The same surface-level quiz UI can serve either purpose — the behavior you ask for determines which.</p>
 
   <h3>5.6 Content or data source</h3>
   <p>Is Codex authoring the material, scaffolding around existing material, or using mock content temporarily? Those are very different situations. If you already have a dataset, a scenario script, or a set of quiz items, say so. If placeholder content is acceptable, say that too.</p>
@@ -1187,6 +1217,7 @@
 
   <h3>5.9 Technical constraints</h3>
   <p>Examples: single HTML file, plain HTML/CSS/JS only, no external libraries, specific library version, SCORM 1.2 compatibility, mobile support, local-only assets. These are not there to sound rigorous — they are there to prevent later mismatches.</p>
+  <p>If learners will reach the object on phones — assume they will — say so explicitly: "Must work on a 360&#215;640 viewport, touch targets at least 44&#215;44 CSS pixels, no hover-only interactions, no layout below 320 CSS pixels of width." Mobile support specified as an afterthought tends to produce content that technically renders but is unusable on the device the learner actually holds.</p>
 
   <h3>5.10 First-version scope</h3>
   <p>What should the first build optimize for? <em>Working structure over polish. Placeholder content is acceptable. Mock data is acceptable. Keep code easy to revise. Do not package for SCORM yet.</em> This is one of the most effective ways to preserve momentum — it tells Codex what <em>not</em> to optimize too early.</p>
@@ -1446,6 +1477,8 @@ Create an interactive learning visualization.<br><br>
     <li>Does the activity actually support the stated learning goal?</li>
     <li>Are instructions understandable? Feedback useful? Pacing appropriate?</li>
     <li>Does the interaction help learning rather than distract from it?</li>
+    <li>Does the activity build toward <strong>transfer</strong> — could the learner apply what they practiced here in a new context, not just on this screen?</li>
+    <li>Is feedback behavior consistent with the intended assessment role — <strong>formative</strong> (hints, retry, explanations) or <strong>summative</strong> (single attempt, recorded score), not an accidental mix?</li>
   </ul>
   <p>This category should come first on purpose. A build can be technically correct and aesthetically polished while still missing the real learning need.</p>
 
@@ -1469,6 +1502,20 @@ Create an interactive learning visualization.<br><br>
     <li>Does the app load correctly? Is state preserved?</li>
     <li>Visible runtime errors? Consistent logic? Works in the target container?</li>
   </ul>
+
+  <h3>10.5 Factual and AI-content validation</h3>
+  <p>Codex will confidently produce plausible-but-wrong facts, fabricated citations, misleading data, and simulation rules that look reasonable but do not match the actual system being modeled. None of the four review lenses above catch those by default. Add a factuality pass for any build that teaches content, not just skills.</p>
+  <ul>
+    <li><strong>Source-check every factual claim</strong> rendered in the UI — definitions, statistics, historical dates, scientific mechanisms, quoted regulations. If the prompt did not supply a source, assume the output is unsourced and verify externally.</li>
+    <li><strong>Inspect simulation and scenario rules.</strong> For branching scenarios, check that consequences are pedagogically honest rather than convenient. For simulations, verify that the underlying model (formulas, probabilities, parameter ranges) matches the domain, not Codex's guess.</li>
+    <li><strong>Re-read generated feedback and explanations.</strong> Feedback that says "good job, the greenhouse effect traps infrared radiation" is only useful if the explanation is correct — a subtle error inside supportive tone is harder to detect than a visibly broken control.</li>
+    <li><strong>Cross-check citations and references.</strong> If Codex outputs author names, years, or titles, confirm they exist before they reach the learner. Fabricated references in learning materials are a disclosure-worthy error.</li>
+    <li><strong>Keep a short errata log</strong> alongside the source files. When you catch an AI-introduced mistake, record what it was, how you found it, and what you changed — this is both a quality trail and a training signal for how to prompt better next time.</li>
+  </ul>
+  <div class="callout warn">
+    <span class="label">Rule</span>
+    <p>No factual claim reaches learners without a named human reviewer. "Codex said so" is never a source.</p>
+  </div>
 </section>
 
 <!-- §11 -->
@@ -1557,6 +1604,8 @@ Create an interactive learning visualization.<br><br>
     <tr><td><strong>xAPI</strong></td><td>Richer event statements and learning-experience data.</td></tr>
     <tr><td><strong>cmi5</strong></td><td>xAPI richness with a stronger LMS launch-and-assignment model.</td></tr>
   </table>
+
+  <p>If your program has a learning-analytics team — or if SCORM's CMI data model is genuinely too narrow for the behavior you want to study — move the object from "SCORM-wrapped" to "cmi5-launched, xAPI-reporting." Appendix E.11 contains a concrete build-and-migrate prompt for this path. Most introductory tutorials should still default to SCORM 1.2; xAPI/cmi5 is a deliberate upgrade, not the default.</p>
 
   <h3>Generic SCORM conversion prompt</h3>
   <div class="prompt">
@@ -1809,7 +1858,7 @@ Only change spacing, hierarchy, and panel structure.
   <div class="prompt">Create an interactive explainer. Section-based progression, small interactive reveals, short guided explanations, summary at the end. Lightweight comprehension checks as needed. Track current section and restore on resume. Plain HTML/CSS/JS; prioritize concision and clarity.</div>
 
   <h3>19.2 Practice quiz</h3>
-  <div class="prompt">Create a practice quiz object. 10 items, one at a time, submit-and-feedback, retry after finishing. Immediate explanatory feedback, final score. Track score and current item; restore on resume. Keep code easy to package for SCORM later.</div>
+  <div class="prompt">Create a practice quiz object. 10 items, one at a time, submit-and-feedback, retry after finishing. Immediate explanatory feedback, final score. Track score and current item; restore on resume. Design for spaced retrieval: the object must be revisitable after the learner leaves and returns — surface items previously answered incorrectly on re-entry, and avoid treating a closed tab as a full reset. Keep code easy to package for SCORM later.</div>
 
   <h3>19.3 Branching scenario</h3>
   <div class="prompt">Create a branching decision scenario. Short setup, 3 choices per step, visible consequences, 4–6 total decision points. Immediate consequence feedback, reflective summary. Track current decision point and chosen path; restore on resume.</div>
@@ -1935,6 +1984,16 @@ Only change spacing, hierarchy, and panel structure.
     <p>If you are building for a US public university, document the conformance level you targeted, the criteria you tested, and any known exceptions. "We intended to be accessible" is not a defensible record. A short accessibility statement per learning object is far stronger.</p>
   </div>
 
+  <h3>Mobile and touch</h3>
+  <p>Mobile support is part of the conformance baseline, not a separate concern. WCAG 2.1's 1.4.10 (Reflow) and 2.5.5 (Target Size, AAA) already imply it, and WCAG 2.2 promotes target size to AA (2.5.8). More importantly, in many programs the majority of learner sessions happen on phones.</p>
+  <ul>
+    <li><strong>Viewport meta tag present</strong> — <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code>. Without it, mobile rendering degrades to a zoomed-out desktop view.</li>
+    <li><strong>Touch targets ≥ 44&#215;44 CSS pixels</strong> for every interactive control (WCAG 2.2 AA, 2.5.8). Small icon buttons and close-together radio buttons are the usual failures.</li>
+    <li><strong>No hover-only interactions.</strong> Any information revealed on hover must also be reachable via focus or tap.</li>
+    <li><strong>Reflow at 320 CSS pixels of width</strong> — vertical scrolling only, no two-dimensional scrolling. Test by narrowing the devtools emulator to a 320-pixel viewport (1.4.10 AA).</li>
+    <li><strong>Be aware of the SCORM-in-iframe mobile reality.</strong> Most LMS mobile apps embed SCORM content in a constrained iframe with limited gesture support; complex drag-and-drop and multi-touch interactions often degrade there. Test in the actual LMS's mobile app, not just a phone-emulated desktop browser.</li>
+  </ul>
+
   <h3>Privacy and data-leak awareness</h3>
   <p>SCORM packages are still web apps and carry ordinary web risks. If your project becomes more production-oriented, review the package for: unexpected external requests, hidden analytics calls, hardcoded secrets, learner identifiers embedded in state, and unsafe use of query strings or stored data.</p>
 </section>
@@ -1951,6 +2010,11 @@ Only change spacing, hierarchy, and panel structure.
 
   <p>At minimum, keep one working source version, one SCORM version, and one web version. If the content grows, also keep an earlier stable checkpoint, a simplified demo, and a data-only reference file.</p>
   <div class="pullquote">Preserve stable versions as soon as they work and treat later modifications as forks rather than overwrites.</div>
+
+  <div class="callout">
+    <span class="label">Prompts are part of the source</span>
+    <p>Version the prompts that produced each stable build, not only the generated files. If the model later changes behavior, or the API becomes unavailable, the documented prompts are your rebuild recipe — without them, the most expensive part of the workflow (the accumulated design decisions) is stranded inside throwaway chat history.</p>
+  </div>
 </section>
 
 <!-- §24 -->
@@ -2427,6 +2491,30 @@ Report: (1) tracked, (2) missing, (3) fragile, (4) fix before LMS testing.
 
   <h3>E.10 Maintainability review</h3>
   <div class="prompt">Review this learning object for maintainability: file organization, readability of interaction logic, ease of changing content later, ease of changing scoring or branching, friendliness to Git-based version control. Then suggest (1) biggest maintainability risk, (2) most useful refactor, (3) how this compares to a proprietary authoring-file workflow.</div>
+
+  <h3>E.11 Build an xAPI / cmi5 learning object</h3>
+  <div class="prompt">
+Build this learning object as a <strong>cmi5-launched, xAPI-reporting</strong> activity rather than a SCORM 1.2 package.<br><br>
+<span class="label">Package shape:</span>
+<ul>
+  <li>cmi5 course structure: <code>cmi5.xml</code> at the root, a single assignable unit (AU) that points to <code>index.html</code></li>
+  <li>AU declares <code>moveOn</code> = <em>CompletedAndPassed</em>, a <code>masteryScore</code>, and a human-readable title/description</li>
+</ul>
+<span class="label">Launch and auth:</span>
+<ul>
+  <li>On launch, read <code>endpoint</code>, <code>fetch</code>, <code>actor</code>, <code>registration</code>, and <code>activityId</code> from the launch URL</li>
+  <li>Exchange the one-time <code>fetch</code> URL for an auth token; reuse that token for all xAPI statements</li>
+</ul>
+<span class="label">Statements to emit:</span>
+<ul>
+  <li><code>cmi5/defined</code> initialized + terminated around the session</li>
+  <li>per-interaction: <em>experienced</em>, <em>attempted</em>, <em>answered</em> (with correct/response), <em>passed</em>/<em>failed</em>, <em>completed</em></li>
+  <li>include <code>context.registration</code>, <code>context.contextActivities.parent</code> = the AU, and learner <code>actor</code> on every statement</li>
+</ul>
+<span class="label">Resume:</span> use xAPI <em>State API</em> under <code>stateId=suspend</code> to store and restore learner-facing state across sessions (replaces SCORM <code>suspend_data</code>).<br>
+<span class="label">Testing:</span> point the tool at a local ADL LRS (<em>Learning Locker</em> or <em>SCORM Cloud's LRS</em>) and verify the statement stream matches the learner journey before LMS integration.<br>
+<span class="label">Report:</span> list (1) which events map to which xAPI verbs, (2) exactly which cmi5 assertions move the LMS from <em>in-progress</em> to <em>passed</em>, (3) what breaks if the LMS does not support cmi5 and only speaks bare xAPI.
+  </div>
 </section>
 
 <!-- Appendix F -->
